@@ -6,49 +6,33 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.placeholder.data.LoginRepository;
+import com.example.placeholder.data.PersonRepository;
 import com.example.placeholder.data.Result;
-import com.example.placeholder.data.model.LoggedInUser;
-import com.example.placeholder.R;
+import com.example.placeholder.data.model.Person;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
+    private PersonRepository personRepository;
+    private MutableLiveData<Person> mutablePerson = new MutableLiveData<>();
 
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
-
-    LiveData<LoginFormState> getLoginFormState() {
-        return loginFormState;
-    }
-
-    LiveData<LoginResult> getLoginResult() {
-        return loginResult;
+    LoginViewModel(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<Person> result = personRepository.login(username, password);
 
         if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
+            mutablePerson.setValue(((Result.Success<Person>) result).getData());
+        }
+        else {
+            mutablePerson.setValue(null);
         }
     }
 
-    public void loginDataChanged(String username, String password) {
-        if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
-        } else {
-            loginFormState.setValue(new LoginFormState(true));
-        }
+    public LiveData<Person> getPerson(){
+        return mutablePerson;
     }
 
     // A placeholder username validation check

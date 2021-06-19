@@ -12,7 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.placeholder.databinding.ActivityWholeAppBinding;
 
-public class WholeApp extends AppCompatActivity {
+public class WholeAppActivity extends AppCompatActivity {
 
     private ActivityWholeAppBinding binding;
 

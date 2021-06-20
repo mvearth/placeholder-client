@@ -1,6 +1,13 @@
 package com.example.placeholder.data.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Person {
+
+    @PrimaryKey
+    private int personId;
 
     private String name;
     private String nickName;

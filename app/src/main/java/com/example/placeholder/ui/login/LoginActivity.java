@@ -21,6 +21,7 @@ import com.example.placeholder.data.PersonDataSource;
 import com.example.placeholder.data.PersonRepository;
 import com.example.placeholder.data.model.Person;
 import com.example.placeholder.databinding.ActivityLoginBinding;
+import com.example.placeholder.ui.signup.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,16 +32,16 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         loginViewModel = new LoginViewModel(PersonRepository.getInstance(new PersonDataSource()));
 
-        if (loginViewModel.getPerson() != null) {
-            startWholeApp();
-            setResult(Activity.RESULT_OK);
-            finish();
-        }
+       // if (loginViewModel.getPerson() != null) {
+        //    startWholeApp();
+       //     setResult(Activity.RESULT_OK);
+        //    finish();
+        //}
+
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
@@ -71,10 +72,22 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSignUp();
+            }
+        });
     }
 
     private void startWholeApp(){
         Intent intent = new Intent(this, WholeAppActivity.class);
+        startActivity(intent);
+    }
+
+    private void startSignUp(){
+        Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 

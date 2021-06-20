@@ -1,5 +1,7 @@
 package com.example.placeholder.data;
 
+import androidx.annotation.StringRes;
+
 /**
  * A generic class that holds a result success w/ data or an error exception.
  */
@@ -35,14 +37,28 @@ public class Result<T> {
 
     // Error sub-class
     public final static class Error extends Result {
+        private @StringRes Integer errorString;
+
         private Exception error;
 
         public Error(Exception error) {
             this.error = error;
         }
 
+        public Error(@StringRes Integer errorString) {
+            this.errorString = errorString;
+        }
+
         public Exception getError() {
             return this.error;
+        }
+
+        public Integer getErrorString() {
+            return errorString;
+        }
+
+        public void setErrorString(@StringRes Integer errorString) {
+            this.errorString = errorString;
         }
     }
 }

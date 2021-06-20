@@ -21,4 +21,12 @@ public class PersonDataSource {
     public void logout() {
         // TODO: revoke authentication
     }
+
+    public boolean checkEmailExists(String email) {
+        return true;
+    }
+
+    public boolean checkNicknameExists(String nickname) {
+        return true;
+    }
 }

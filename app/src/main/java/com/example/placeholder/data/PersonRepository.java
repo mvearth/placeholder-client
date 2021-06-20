@@ -51,4 +51,12 @@ public class PersonRepository {
         }
         return result;
     }
+
+    public boolean checkEmailExists(String email) {
+        return dataSource.checkEmailExists(email);
+    }
+
+    public boolean checkNicknameExists(String nickname) {
+        return dataSource.checkNicknameExists(nickname);
+    }
 }

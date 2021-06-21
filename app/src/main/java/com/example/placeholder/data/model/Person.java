@@ -1,7 +1,6 @@
 package com.example.placeholder.data.model;
 
 public class Person {
-
     private String name;
     private String nickName;
     private String email;

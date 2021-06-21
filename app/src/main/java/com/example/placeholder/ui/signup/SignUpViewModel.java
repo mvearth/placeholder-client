@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel;
 import android.util.Patterns;
 
 import com.example.placeholder.R;
-import com.example.placeholder.data.PersonRepository;
-import com.example.placeholder.data.Result;
+import com.example.placeholder.data.api.PersonRepository;
+import com.example.placeholder.data.util.Result;
 import com.example.placeholder.data.model.Person;
-
-import java.io.IOException;
 
 public class SignUpViewModel extends ViewModel {
 

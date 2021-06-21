@@ -1,5 +1,6 @@
-package com.example.placeholder.data;
+package com.example.placeholder.data.api;
 
+import com.example.placeholder.data.util.Result;
 import com.example.placeholder.data.model.Person;
 
 import java.io.IOException;

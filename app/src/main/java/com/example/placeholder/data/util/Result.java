@@ -1,4 +1,4 @@
-package com.example.placeholder.data;
+package com.example.placeholder.data.util;
 
 import androidx.annotation.StringRes;
 

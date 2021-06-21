@@ -9,10 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.placeholder.R;
-import com.example.placeholder.data.PersonDataSource;
-import com.example.placeholder.data.PersonRepository;
-import com.example.placeholder.data.Result;
+import com.example.placeholder.data.api.PersonDataSource;
+import com.example.placeholder.data.api.PersonRepository;
+import com.example.placeholder.data.util.Result;
 import com.example.placeholder.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {

@@ -1,11 +1,8 @@
 package com.example.placeholder.data.model;
 
-import androidx.room.Entity;
-
 import java.util.Date;
 import java.util.List;
 
-@Entity(tableName = "song_suggestion")
 public class SongSuggestion extends Suggestion{
     private List<String> artists;
     private String album;

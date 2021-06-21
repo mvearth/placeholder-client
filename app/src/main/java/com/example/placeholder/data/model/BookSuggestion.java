@@ -1,11 +1,8 @@
 package com.example.placeholder.data.model;
 
-import androidx.room.Entity;
-
 import java.util.Date;
 import java.util.List;
 
-@Entity(tableName = "book_suggestion")
 public class BookSuggestion extends Suggestion{
     private List<String> authors;
 

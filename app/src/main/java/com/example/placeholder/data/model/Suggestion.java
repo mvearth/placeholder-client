@@ -2,14 +2,10 @@ package com.example.placeholder.data.model;
 
 import android.media.Image;
 
-import androidx.room.ColumnInfo;
-import androidx.room.PrimaryKey;
-
 import java.util.Date;
 import java.util.List;
 
 public abstract class Suggestion {
-    @PrimaryKey
     private int suggestionId;
 
     private int persionCreatorId;
@@ -20,7 +16,6 @@ public abstract class Suggestion {
 
     private List<Image> images;
 
-    @ColumnInfo(name = "suggestion_date")
     private Date suggestionDate;
 
     public String getDescription() {

@@ -33,4 +33,9 @@ public class BookSuggestion extends Suggestion{
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
+
+    @Override
+    public SuggestionType getSuggestionType() {
+        return SuggestionType.BookSuggestion;
+    }
 }

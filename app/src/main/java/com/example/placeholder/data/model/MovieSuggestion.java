@@ -12,4 +12,9 @@ public class MovieSuggestion extends Suggestion{
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    @Override
+    public SuggestionType getSuggestionType() {
+        return SuggestionType.MovieSuggestion;
+    }
 }

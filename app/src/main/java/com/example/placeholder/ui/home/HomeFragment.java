@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
 
         suggestionAdapter = new SuggestionAdapter();
         RecyclerView suggestionsRecyclerView = getView().findViewById(R.id.suggestions_view);
-        suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
         suggestionsRecyclerView.setHasFixedSize(true);
         suggestionsRecyclerView.setAdapter(suggestionAdapter);
 

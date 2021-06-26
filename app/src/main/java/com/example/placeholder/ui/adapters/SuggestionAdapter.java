@@ -23,6 +23,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView personIcon;
         private final TextView personName;
+        private final TextView suggestionTitle;
         private final TextView suggestionDescription;
 
         public ViewHolder(View view) {
@@ -31,6 +32,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
             personIcon = (ImageView) view.findViewById(R.id.imgView_personIcon);
             personName = (TextView) view.findViewById(R.id.txtView_personName);
+            suggestionTitle = (TextView) view.findViewById((R.id.txtView_suggestionTitle));
             suggestionDescription = (TextView) view.findViewById(R.id.txtView_suggestionDescription);
         }
 
@@ -40,6 +42,10 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
         public TextView getPersonName() {
             return personName;
+        }
+
+        public TextView getSuggestionTitle() {
+            return suggestionTitle;
         }
 
         public TextView getSuggestionDescription() {
@@ -62,8 +68,12 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
+        //viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
         viewHolder.getPersonName().setText(localDataSet[position].getPerson().getNickname());
+        viewHolder.getSuggestionTitle().setText(
+                localDataSet[position].getSuggestionType().toString() +
+                " - " +
+                localDataSet[position].getTitle());
         viewHolder.getSuggestionDescription().setText(localDataSet[position].getDescription());
     }
 

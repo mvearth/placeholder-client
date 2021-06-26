@@ -2,6 +2,8 @@ package com.example.placeholder.data.api;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,15 +18,25 @@ public class SuggestionRepository {
 
         final Person person = new Person();
         person.setNickname("nome");
-        //person.setIcon(BitmapFactory.decodeFile("C:\\Users\\fabio\\Downloads\\goku totosa.jpg"));
+        //person.setIcon(BitmapFactory.decodeFile("/documents/raw:/storage/emulated/0/Download/goku totosa.jpg"));
 
         final BookSuggestion bookSuggestion = new BookSuggestion();
         bookSuggestion.setDescription("meu livrin");
+        bookSuggestion.setTitle("o libro fasdiofjadsp");
         bookSuggestion.setPerson(person);
 
-        final Suggestion[] suggestions = new Suggestion[]{bookSuggestion};
+        final Suggestion[] suggestions = new Suggestion[]{bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion};
         data.setValue(suggestions);
 
         return data;
+    }
+
+    public static Bitmap createImage(int width, int height, int color) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(color);
+        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
+        return bitmap;
     }
 }

@@ -2,6 +2,8 @@ package com.example.placeholder.data.model;
 
 import android.media.Image;
 
+import com.example.placeholder.ui.suggestion.SuggestionFragment;
+
 import java.util.Date;
 import java.util.List;
 
@@ -67,4 +69,6 @@ public abstract class Suggestion {
     public void setSuggestionDate(Date suggestionDate) {
         this.suggestionDate = suggestionDate;
     }
+
+    public abstract SuggestionType getSuggestionType();
 }

@@ -31,4 +31,9 @@ public class SongSuggestion extends Suggestion{
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    @Override
+    public SuggestionType getSuggestionType() {
+        return SuggestionType.SongSuggestion;
+    }
 }

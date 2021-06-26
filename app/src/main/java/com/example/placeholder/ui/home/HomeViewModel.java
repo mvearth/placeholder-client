@@ -8,7 +8,6 @@ import com.example.placeholder.data.model.Feed;
 import com.example.placeholder.data.model.Suggestion;
 
 public class HomeViewModel extends ViewModel {
-    LiveData<Feed> feed;
     SuggestionRepository suggestionRepository;
 
     private final LiveData<Suggestion[]> suggestionArrayObservable;

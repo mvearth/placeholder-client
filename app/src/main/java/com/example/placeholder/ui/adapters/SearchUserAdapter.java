@@ -1,30 +1,27 @@
 package com.example.placeholder.ui.adapters;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.placeholder.R;
+import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.ViewHolder> {
+public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
-    private Suggestion[] localDataSet;
+    private Person[] localDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView personIcon;
         private final TextView personNickname;
-        private final TextView suggestionTitle;
-        private final TextView suggestionDescription;
+        private final TextView personName;
 
         public ViewHolder(View view) {
             super(view);
@@ -32,8 +29,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
             personIcon = (ImageView) view.findViewById(R.id.imgView_personIcon);
             personNickname = (TextView) view.findViewById(R.id.txtView_personNickname);
-            suggestionTitle = (TextView) view.findViewById((R.id.txtView_suggestionTitle));
-            suggestionDescription = (TextView) view.findViewById(R.id.txtView_suggestionDescription);
+            personName = (TextView) view.findViewById((R.id.txtView_personName));
         }
 
         public ImageView getPersonIcon() {
@@ -44,37 +40,29 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
             return personNickname;
         }
 
-        public TextView getSuggestionTitle() {
-            return suggestionTitle;
-        }
-
-        public TextView getSuggestionDescription() {
-            return suggestionDescription;
+        public TextView getPersonName() {
+            return personName;
         }
     }
 
-    public void setLocalDataSet(Suggestion[] dataSet){
+    public void setLocalDataSet(Person[] dataSet) {
         localDataSet = dataSet;
     }
 
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public SearchUserAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.suggestion, viewGroup, false);
 
-        return new ViewHolder(view);
+        return new SearchUserAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(SearchUserAdapter.ViewHolder viewHolder, final int position) {
         //viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
-        viewHolder.getPersonNickname().setText(localDataSet[position].getPerson().getNickname());
-        viewHolder.getSuggestionTitle().setText(
-                localDataSet[position].getSuggestionType().toString() +
-                " - " +
-                localDataSet[position].getTitle());
-        viewHolder.getSuggestionDescription().setText(localDataSet[position].getDescription());
+        viewHolder.getPersonNickname().setText(localDataSet[position].getNickname());
+        viewHolder.getPersonName().setText(localDataSet[position].getName());
     }
 
     @Override

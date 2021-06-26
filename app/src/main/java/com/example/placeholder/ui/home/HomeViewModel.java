@@ -11,5 +11,14 @@ public class HomeViewModel extends ViewModel {
     LiveData<Feed> feed;
     SuggestionRepository suggestionRepository;
 
+    private final LiveData<Suggestion[]> suggestionArrayObservable;
 
+    public HomeViewModel(){
+        suggestionRepository = new SuggestionRepository();
+        suggestionArrayObservable = suggestionRepository.getSuggestions();
+    }
+
+    public LiveData<Suggestion[]> getSuggestions(){
+        return suggestionArrayObservable;
+    }
 }

@@ -1,16 +1,19 @@
 package com.example.placeholder.data.model;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 public class Person {
     private String name;
-    private String nickName;
+    private String nickname;
     private String email;
     private String password;
+    private Bitmap icon;
 
     public Person() {}
 
-    public Person(String name, String nickName, String email, String password){
+    public Person(String name, String nickname, String email, String password){
         this.name = name;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.email = email;
         this.password = password;
     }
@@ -23,12 +26,12 @@ public class Person {
         this.name = name;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -45,5 +48,13 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Bitmap getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Bitmap icon) {
+        this.icon = icon;
     }
 }

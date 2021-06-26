@@ -18,6 +18,16 @@ public abstract class Suggestion {
 
     private Date suggestionDate;
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    private Person person;
+
     public String getDescription() {
         return description;
     }

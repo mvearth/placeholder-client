@@ -39,7 +39,6 @@ public class ProfileFragment extends Fragment {
     private TextView followersTextView;
     private TextView followingTextView;
 
-
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }

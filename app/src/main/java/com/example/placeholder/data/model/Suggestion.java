@@ -1,5 +1,6 @@
 package com.example.placeholder.data.model;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import com.example.placeholder.ui.suggestion.SuggestionFragment;
@@ -16,7 +17,7 @@ public abstract class Suggestion {
 
     private String description;
 
-    private List<Image> images;
+    private List<Bitmap> images;
 
     private Date suggestionDate;
 
@@ -38,11 +39,11 @@ public abstract class Suggestion {
         this.description = description;
     }
 
-    public List<Image> getImages() {
+    public List<Bitmap> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<Bitmap> images) {
         this.images = images;
     }
 

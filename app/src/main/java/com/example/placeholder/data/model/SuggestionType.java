@@ -4,5 +4,6 @@ public enum SuggestionType {
     OtherSuggestion,
     BookSuggestion,
     MovieSuggestion,
-    SongSuggestion
+    SongSuggestion,
+    RandomSuggestion
 }

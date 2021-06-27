@@ -55,6 +55,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
     public void setLocalDataSet(Suggestion[] dataSet){
         localDataSet = dataSet;
+        notifyDataSetChanged();
     }
 
     @NotNull

@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import android.util.Patterns;
 
 import com.example.placeholder.data.api.PersonRepository;
-import com.example.placeholder.data.util.Result;
 import com.example.placeholder.data.model.Person;
 
 public class LoginViewModel extends ViewModel {
@@ -21,10 +20,10 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<Person> result = personRepository.login(username, password);
+        LiveData<Person> result = personRepository.login(username, password);
 
-        if (result instanceof Result.Success) {
-            mutablePerson.setValue(((Result.Success<Person>) result).getData());
+        if (result.getValue() != null) {
+            mutablePerson.setValue(result.getValue());
         }
         else {
             mutablePerson.setValue(null);

@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.placeholder.R;
 import com.example.placeholder.WholeAppActivity;
-import com.example.placeholder.data.api.PersonDataSource;
 import com.example.placeholder.data.api.PersonRepository;
 import com.example.placeholder.data.model.Person;
 import com.example.placeholder.databinding.ActivityLoginBinding;
@@ -32,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginViewModel = new LoginViewModel(PersonRepository.getInstance(new PersonDataSource()));
+        loginViewModel = new LoginViewModel(PersonRepository.getInstance());
 
        // if (loginViewModel.getPerson() != null) {
         //    startWholeApp();

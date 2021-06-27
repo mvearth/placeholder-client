@@ -1,5 +1,6 @@
 package com.example.placeholder.ui.signup;
 
+import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,7 +9,6 @@ import android.util.Patterns;
 
 import com.example.placeholder.R;
 import com.example.placeholder.data.api.PersonRepository;
-import com.example.placeholder.data.util.Result;
 import com.example.placeholder.data.model.Person;
 
 public class SignUpViewModel extends ViewModel {
@@ -54,19 +54,21 @@ public class SignUpViewModel extends ViewModel {
         return personRepository.checkNicknameExists(nickname);
     }
 
-    public Result validateSignUp(String nickName, String email, String password, String passwordConfirm) {
+    public @StringRes Integer validateSignUp(String nickName, String email, String password, String passwordConfirm) {
+        @StringRes Integer returnString = 0;
+
         if (!validatePasswords(password, passwordConfirm)){
-            return new Result.Error(R.string.invalid_password);
+            returnString = R.string.invalid_password;
         }
 
         if (!validateEmail(email)){
-            return new Result.Error(R.string.invalid_email);
+            returnString = R.string.invalid_email;
         }
 
         if (!validateNickname(nickName)){
-            return new Result.Error(R.string.invalid_nickname);
+            returnString = R.string.invalid_nickname;
         }
 
-        return new Result.Success<>(true);
+        return returnString;
     }
 }

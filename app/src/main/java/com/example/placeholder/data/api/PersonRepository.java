@@ -1,6 +1,7 @@
 package com.example.placeholder.data.api;
 
-import com.example.placeholder.data.util.Result;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import com.example.placeholder.data.model.Person;
 
 /**
@@ -11,53 +12,70 @@ public class PersonRepository {
 
     private static volatile PersonRepository instance;
 
-    private PersonDataSource dataSource;
-
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private Person user = null;
+    private MutableLiveData<Person> person = new MutableLiveData<>();
 
     // private constructor : singleton access
-    private PersonRepository(PersonDataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private PersonRepository() {}
 
-    public static PersonRepository getInstance(PersonDataSource dataSource) {
+    public static PersonRepository getInstance() {
         if (instance == null) {
-            instance = new PersonRepository(dataSource);
+            instance = new PersonRepository();
         }
         return instance;
     }
 
     public boolean isLoggedIn() {
-        return user != null;
+        return person != null;
     }
 
     public void logout() {
-        user = null;
-        dataSource.logout();
+        person = null;
+        //dataSource.logout();
     }
 
-    private void setLoggedInUser(Person user) {
-        this.user = user;
+    private void setLoggedInUser(Person person) {
+        this.person.setValue(person);
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<Person> login(String username, String password) {
+    public LiveData<Person> login(String personName, String password) {
         // handle login
-        Result<Person> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<Person>) result).getData());
-        }
-        return result;
+       // Result<Person> result = dataSource.login(username, password);
+        //if (result instanceof Result.Success) {
+       //     setLoggedInUser(((Result.Success<Person>) result).getData());
+        //}
+        //return result;
+
+        this.person.setValue(this.getPerson("").getValue());
+
+        return this.person;
     }
 
     public boolean checkEmailExists(String email) {
-        return dataSource.checkEmailExists(email);
+        //return dataSource.checkEmailExists(email);
+        return true;
     }
 
     public boolean checkNicknameExists(String nickname) {
-        return dataSource.checkNicknameExists(nickname);
+        //return dataSource.checkNicknameExists(nickname);
+        return true;
+    }
+
+    public LiveData<Person> getLoggedPerson(){
+        return this.person;
+    }
+
+    public LiveData<Person> getPerson(String nickname){
+        MutableLiveData<Person> liveperson = new MutableLiveData<>();
+        Person person = new Person();
+        person.setName("putaria");
+        person.setNickname("sexo kk");
+
+        liveperson.setValue(person);
+
+        return liveperson;
     }
 }

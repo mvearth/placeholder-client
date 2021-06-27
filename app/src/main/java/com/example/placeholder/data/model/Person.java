@@ -8,6 +8,8 @@ public class Person {
     private String email;
     private String password;
     private Bitmap icon;
+    private long followers;
+    private long following;
 
     public Person() {}
 
@@ -56,5 +58,21 @@ public class Person {
 
     public void setIcon(Bitmap icon) {
         this.icon = icon;
+    }
+
+    public long getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(long followers) {
+        this.followers = followers;
+    }
+
+    public long getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(long following) {
+        this.following = following;
     }
 }

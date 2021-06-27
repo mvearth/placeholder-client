@@ -9,9 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.placeholder.data.api.PersonDataSource;
 import com.example.placeholder.data.api.PersonRepository;
-import com.example.placeholder.data.util.Result;
 import com.example.placeholder.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -23,7 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        signUpViewModel = new SignUpViewModel(PersonRepository.getInstance(new PersonDataSource()));
+        signUpViewModel = new SignUpViewModel(PersonRepository.getInstance());
 
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -51,9 +49,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validate(String nickName, String email, String password, String passwordConfirm) {
-        Result result = signUpViewModel.validateSignUp(nickName, email, password, passwordConfirm);
-        if (result instanceof Result.Error) {
-            showSignUpFailed(((Result.Error) result).getErrorString());
+        @StringRes Integer result = signUpViewModel.validateSignUp(nickName, email, password, passwordConfirm);
+        if (result != 0) {
+            showSignUpFailed(result);
 
             return false;
         }

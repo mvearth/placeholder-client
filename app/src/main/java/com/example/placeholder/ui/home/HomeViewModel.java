@@ -10,14 +10,15 @@ import com.example.placeholder.data.model.Suggestion;
 public class HomeViewModel extends ViewModel {
     SuggestionRepository suggestionRepository;
 
-    private final LiveData<Suggestion[]> suggestionArrayObservable;
+    private LiveData<Suggestion[]> suggestionArrayObservable;
 
     public HomeViewModel(){
         suggestionRepository = new SuggestionRepository();
-        suggestionArrayObservable = suggestionRepository.getSuggestions();
     }
 
-    public LiveData<Suggestion[]> getSuggestions(){
+    public LiveData<Suggestion[]> getSuggestions(String nickname){
+        suggestionArrayObservable = suggestionRepository.getFollowingSuggestions(nickname);
+
         return suggestionArrayObservable;
     }
 }

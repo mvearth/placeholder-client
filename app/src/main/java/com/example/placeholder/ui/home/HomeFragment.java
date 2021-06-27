@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void observeViewModel(HomeViewModel viewModel) {
-        viewModel.getSuggestions().observe(this, new Observer<Suggestion[]>() {
+        viewModel.getSuggestions("").observe(getViewLifecycleOwner(), new Observer<Suggestion[]>() {
             @Override
             public void onChanged(@Nullable Suggestion[] suggestions) {
                 if (suggestions != null) {

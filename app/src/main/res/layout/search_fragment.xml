@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/default_suggestion_description_border"
             android:hint="Search user..."

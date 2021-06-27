@@ -47,6 +47,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     public void setLocalDataSet(Person[] dataSet) {
         localDataSet = dataSet;
+        notifyDataSetChanged();
     }
 
     @NotNull

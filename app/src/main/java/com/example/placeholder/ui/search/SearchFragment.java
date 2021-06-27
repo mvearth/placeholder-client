@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.placeholder.R;
@@ -26,6 +28,8 @@ import com.example.placeholder.databinding.ActivityLoginBinding;
 import com.example.placeholder.ui.adapters.SearchUserAdapter;
 import com.example.placeholder.ui.adapters.SuggestionAdapter;
 import com.example.placeholder.ui.home.HomeViewModel;
+
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
@@ -48,10 +52,10 @@ public class SearchFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
 
         searchUserAdapter = new SearchUserAdapter();
-        RecyclerView suggestionsRecyclerView = getView().findViewById(R.id.search_user_view);
-        suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
-        suggestionsRecyclerView.setHasFixedSize(true);
-        suggestionsRecyclerView.setAdapter(searchUserAdapter);
+        RecyclerView searchUserRecyclerView = getView().findViewById(R.id.search_user_view);
+        searchUserRecyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
+        searchUserRecyclerView.setHasFixedSize(true);
+        searchUserRecyclerView.setAdapter(searchUserAdapter);
 
         EditText searchString = getView().findViewById(R.id.search_input);
         searchString.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -60,8 +64,9 @@ public class SearchFragment extends Fragment {
                 if ((event != null
                         && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
                             || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    //searchUserAdapter.setLocalDataSet(mViewModel.searchRepository.getSearchedPeople(searchString.getText()));
+                    observeViewModel(mViewModel, searchString.getText().toString());
                 }
+
                 return false;
             }
         });

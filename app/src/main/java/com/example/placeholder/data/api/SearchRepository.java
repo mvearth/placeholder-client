@@ -10,10 +10,21 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.placeholder.data.model.BookSuggestion;
 import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
+import com.example.placeholder.ui.search.SearchViewModel;
 
 public class SearchRepository {
-    public LiveData<Person[]> getSearchedPeople(String searchString) {
-        final MutableLiveData<Person[]> data = new MutableLiveData<>();
+
+    MutableLiveData<Person[]> people;
+
+    public SearchRepository() {
+        people = new MutableLiveData<>(new Person[]{});
+    }
+
+    public LiveData<Person[]> getSearchedPeople() {
+        return people;
+    }
+
+    public void searchPeople(String searchString) {
 
         final Person person1 = new Person();
         person1.setNickname("nome");
@@ -24,15 +35,7 @@ public class SearchRepository {
         person2.setName("aaaaa");
         //person.setIcon(BitmapFactory.decodeFile("/documents/raw:/storage/emulated/0/Download/goku totosa.jpg"));
 
-        final Person[] people = new Person[2];
-        if (person1.getNickname().contains(searchString))
-            people[0] = person1;
-
-        if (person2.getNickname().contains(searchString))
-            people[1] = person2;
-
-        data.setValue(people);
-
-        return data;
+        final Person[] peopleaaasa = new Person[]{person1, person2};
+        people.setValue(peopleaaasa);
     }
 }

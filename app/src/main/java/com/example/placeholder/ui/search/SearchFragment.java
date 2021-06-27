@@ -64,18 +64,18 @@ public class SearchFragment extends Fragment {
                 if ((event != null
                         && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
                             || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    observeViewModel(mViewModel, searchString.getText().toString());
+                    mViewModel.searchPeople(searchString.getText().toString());
                 }
 
                 return false;
             }
         });
 
-        observeViewModel(mViewModel, searchString.getText().toString());
+        observeViewModel(mViewModel);
     }
 
-    private void observeViewModel(SearchViewModel viewModel, String searchString) {
-        viewModel.getPeople(searchString).observe(this, new Observer<Person[]>() {
+    private void observeViewModel(SearchViewModel viewModel) {
+        viewModel.getSearchedPeople().observe(getViewLifecycleOwner(), new Observer<Person[]>() {
             @Override
             public void onChanged(@Nullable Person[] people) {
                 if (people != null) {

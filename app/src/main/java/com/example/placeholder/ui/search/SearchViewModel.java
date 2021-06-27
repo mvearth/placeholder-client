@@ -21,10 +21,14 @@ public class SearchViewModel extends ViewModel {
         searchRepository = new SearchRepository();
     }
 
-    public LiveData<Person[]> getPeople(String searchedString) {
-        personArrayObservable = searchRepository.getSearchedPeople(searchedString);
+    public LiveData<Person[]> getSearchedPeople() {
+        personArrayObservable = searchRepository.getSearchedPeople();
 
         return personArrayObservable;
+    }
+
+    public void searchPeople(String searchString) {
+        searchRepository.searchPeople(searchString);
     }
 }
 

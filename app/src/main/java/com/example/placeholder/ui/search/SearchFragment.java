@@ -11,12 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.placeholder.R;
+import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
+import com.example.placeholder.databinding.ActivityLoginBinding;
 import com.example.placeholder.ui.adapters.SearchUserAdapter;
 import com.example.placeholder.ui.adapters.SuggestionAdapter;
 import com.example.placeholder.ui.home.HomeViewModel;
@@ -42,22 +48,33 @@ public class SearchFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
 
         searchUserAdapter = new SearchUserAdapter();
-        RecyclerView suggestionsRecyclerView = getView().findViewById(R.id.search_user);
+        RecyclerView suggestionsRecyclerView = getView().findViewById(R.id.search_user_view);
         suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
         suggestionsRecyclerView.setHasFixedSize(true);
         suggestionsRecyclerView.setAdapter(searchUserAdapter);
 
-        observeViewModel(mViewModel);
+        EditText searchString = getView().findViewById(R.id.search_input);
+        searchString.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null
+                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
+                            || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    //searchUserAdapter.setLocalDataSet(mViewModel.searchRepository.getSearchedPeople(searchString.getText()));
+                }
+                return false;
+            }
+        });
+
+        observeViewModel(mViewModel, searchString.getText().toString());
     }
 
-    private void observeViewModel(SearchViewModel viewModel) {
-        // Update the list when the data changes
-        viewModel.get().observe(this, new Observer<Suggestion[]>() {
+    private void observeViewModel(SearchViewModel viewModel, String searchString) {
+        viewModel.getPeople(searchString).observe(this, new Observer<Person[]>() {
             @Override
-            public void onChanged(@Nullable Suggestion[] suggestions) {
-                if (suggestions != null) {
-                    //…
-                    suggestionAdapter.setLocalDataSet(suggestions);
+            public void onChanged(@Nullable Person[] people) {
+                if (people != null) {
+                    searchUserAdapter.setLocalDataSet(people);
                 }
             }
         });

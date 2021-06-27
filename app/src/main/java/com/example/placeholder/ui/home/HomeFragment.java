@@ -50,12 +50,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void observeViewModel(HomeViewModel viewModel) {
-        // Update the list when the data changes
         viewModel.getSuggestions().observe(this, new Observer<Suggestion[]>() {
             @Override
             public void onChanged(@Nullable Suggestion[] suggestions) {
                 if (suggestions != null) {
-                    //…
                     suggestionAdapter.setLocalDataSet(suggestions);
                 }
             }

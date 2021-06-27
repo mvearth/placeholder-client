@@ -53,7 +53,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     @Override
     public SearchUserAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.suggestion, viewGroup, false);
+                .inflate(R.layout.search_user, viewGroup, false);
 
         return new SearchUserAdapter.ViewHolder(view);
     }

@@ -5,9 +5,131 @@
     android:layout_height="match_parent"
     tools:context=".ui.post.PostFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Category" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imgButton_song"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/default_suggestion_description_border"
+                android:src="@drawable/ic_headset_24dp"
+                android:tooltipText="Song" />
+
+            <ImageButton
+                android:id="@+id/imgButton_movie"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/default_suggestion_description_border"
+                android:src="@drawable/ic_movie_24dp"
+                android:tooltipText="Movie / TV" />
+
+            <ImageButton
+                android:id="@+id/imgButton_book"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/default_suggestion_description_border"
+                android:src="@drawable/ic_book_24dp"
+                android:tooltipText="Book / Magazine" />
+
+            <ImageButton
+                android:id="@+id/imgButton_other_and_more"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/default_suggestion_description_border"
+                android:src="@drawable/ic_other_and_beyond_24dp"
+                android:tooltipText="Other" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/default_suggestion_description_border"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/txtView_suggestionType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Suggestion title...."
+                android:padding="10dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/txtView_suggestionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="What do you think about it?"
+                android:padding="10dp"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgView_selectedImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp" />
+
+                <ImageButton
+                    android:id="@+id/imgButton_addImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/default_suggestion_description_border"
+                    android:src="@drawable/ic_add_24dp"
+                    android:tooltipText="Add image" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imgButton_post"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/default_suggestion_description_border"
+            android:src="@drawable/ic_post_24dp"
+            android:tooltipText="Random" />
+
+    </LinearLayout>
 
 </FrameLayout>

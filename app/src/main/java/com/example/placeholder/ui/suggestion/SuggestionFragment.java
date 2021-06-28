@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.placeholder.R;
@@ -25,11 +27,7 @@ import com.example.placeholder.ui.profile.ProfileViewModel;
 public class SuggestionFragment extends Fragment {
 
     private SuggestionViewModel mViewModel;
-    private ImageButton songImageButton;
-    private ImageButton movieImageButton;
-    private ImageButton bookImageButton;
-    private ImageButton otherImageButton;
-    private ImageButton randomImageButton;
+    private RadioGroup suggestionRadioGroup;
     private TextView suggestionType;
     private TextView suggestionTitle;
     private ImageView suggestionImage;
@@ -43,47 +41,34 @@ public class SuggestionFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.suggestion_fragment, container, false);
 
-        songImageButton = (ImageButton) view.findViewById(R.id.imgButton_song);
-        movieImageButton = (ImageButton) view.findViewById(R.id.imgButton_movie);
-        bookImageButton = (ImageButton) view.findViewById(R.id.imgButton_book);
-        otherImageButton = (ImageButton) view.findViewById(R.id.imgButton_other_and_more);
-        randomImageButton = (ImageButton) view.findViewById(R.id.imgButton_random);
+        suggestionRadioGroup = (RadioGroup) view.findViewById(R.id.radioButton_selectedCategory);
         suggestionType = (TextView) view.findViewById(R.id.txtView_suggestionType);
         suggestionTitle = (TextView) view.findViewById(R.id.txtView_suggestionTitle);
         suggestionImage = (ImageView) view.findViewById(R.id.imgView_suggestionFirstImage);
 
-        songImageButton.setOnClickListener(new View.OnClickListener() {
+        suggestionRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                mViewModel.updateRandomSuggestion(SuggestionType.SongSuggestion);
-            }
-        });
-
-        movieImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.updateRandomSuggestion(SuggestionType.MovieSuggestion);
-            }
-        });
-
-        bookImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.updateRandomSuggestion(SuggestionType.BookSuggestion);
-            }
-        });
-
-        otherImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.updateRandomSuggestion(SuggestionType.OtherSuggestion);
-            }
-        });
-
-        randomImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.updateRandomSuggestion(SuggestionType.RandomSuggestion);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButton_song:
+                        mViewModel.updateRandomSuggestion(SuggestionType.SongSuggestion);
+                        break;
+                    case R.id.radioButton_movie:
+                        mViewModel.updateRandomSuggestion(SuggestionType.MovieSuggestion);
+                        break;
+                    case R.id.radioButton_book:
+                        mViewModel.updateRandomSuggestion(SuggestionType.BookSuggestion);
+                        break;
+                    case R.id.radioButton_other_and_more:
+                        mViewModel.updateRandomSuggestion(SuggestionType.OtherSuggestion);
+                        break;
+                    case R.id.radioButton_random:
+                        mViewModel.updateRandomSuggestion(SuggestionType.RandomSuggestion);
+                        break;
+                    default:
+                        mViewModel.updateRandomSuggestion(SuggestionType.OtherSuggestion);
+                        break;
+                }
             }
         });
 

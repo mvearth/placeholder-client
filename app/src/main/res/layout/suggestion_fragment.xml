@@ -22,58 +22,74 @@
             android:layout_marginBottom="5dp"
             android:text="Category" />
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/radioButton_selectedCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imgButton_song"
+            <RadioButton
+                android:id="@+id/radioButton_song"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/default_suggestion_description_border"
-                android:src="@drawable/ic_headset_24dp"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:drawableStart="@drawable/ic_headset_24dp"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
                 android:tooltipText="Song" />
 
-            <ImageButton
-                android:id="@+id/imgButton_movie"
+            <RadioButton
+                android:id="@+id/radioButton_movie"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/default_suggestion_description_border"
-                android:src="@drawable/ic_movie_24dp"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:drawableStart="@drawable/ic_movie_24dp"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
                 android:tooltipText="Movie / TV" />
 
-            <ImageButton
-                android:id="@+id/imgButton_book"
+            <RadioButton
+                android:id="@+id/radioButton_book"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/default_suggestion_description_border"
-                android:src="@drawable/ic_book_24dp"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:drawableStart="@drawable/ic_book_24dp"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
                 android:tooltipText="Book / Magazine" />
 
-            <ImageButton
-                android:id="@+id/imgButton_other_and_more"
+            <RadioButton
+                android:id="@+id/radioButton_other_and_more"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/default_suggestion_description_border"
-                android:src="@drawable/ic_other_and_beyond_24dp"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:drawableStart="@drawable/ic_other_and_beyond_24dp"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
                 android:tooltipText="Other" />
 
-            <ImageButton
-                android:id="@+id/imgButton_random"
+            <RadioButton
+                android:id="@+id/radioButton_random"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/default_suggestion_description_border"
-                android:src="@drawable/ic_random_24dp"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:drawableStart="@drawable/ic_random_24dp"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
                 android:tooltipText="Random" />
 
-        </LinearLayout>
+        </RadioGroup>
 
         <TextView
             android:id="@+id/txtView_suggestionDescriptionText"

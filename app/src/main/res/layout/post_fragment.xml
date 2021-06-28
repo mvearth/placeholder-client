@@ -22,7 +22,6 @@
             android:layout_marginBottom="5dp"
             android:text="Category" />
 
-
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
                 android:hint="Suggestion title...."
                 android:padding="10dp"
                 android:textSize="15sp" />
@@ -102,8 +102,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
                 android:hint="What do you think about it?"
                 android:padding="10dp"
+                android:maxLines="10"
                 android:textSize="15sp" />
 
             <LinearLayout

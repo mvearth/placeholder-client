@@ -90,7 +90,7 @@ public class SuggestionFragment extends Fragment {
                 if (suggestion != null) {
                     suggestionType.setText(suggestion.getSuggestionType().toString());
                     suggestionTitle.setText(suggestion.getTitle());
-                    //suggestionImage.setImageBitmap(suggestion.getImages().get(0));
+                    suggestionImage.setImageBitmap(suggestion.getImages()[0]);
                 }
             }
         });

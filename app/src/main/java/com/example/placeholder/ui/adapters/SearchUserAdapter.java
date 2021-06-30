@@ -61,7 +61,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public void onBindViewHolder(SearchUserAdapter.ViewHolder viewHolder, final int position) {
-        //viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
+        viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getIcon());
         viewHolder.getPersonNickname().setText(localDataSet[position].getNickname());
         viewHolder.getPersonName().setText(localDataSet[position].getName());
     }

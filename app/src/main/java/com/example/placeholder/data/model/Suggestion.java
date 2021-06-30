@@ -17,7 +17,7 @@ public abstract class Suggestion {
 
     private String description;
 
-    private List<Bitmap> images;
+    private Bitmap[] images;
 
     private Date suggestionDate;
 
@@ -39,11 +39,11 @@ public abstract class Suggestion {
         this.description = description;
     }
 
-    public List<Bitmap> getImages() {
+    public Bitmap[] getImages() {
         return images;
     }
 
-    public void setImages(List<Bitmap> images) {
+    public void setImages(Bitmap[] images) {
         this.images = images;
     }
 

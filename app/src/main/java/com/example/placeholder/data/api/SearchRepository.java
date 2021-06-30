@@ -1,8 +1,10 @@
 package com.example.placeholder.data.api;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Environment;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -26,16 +28,12 @@ public class SearchRepository {
 
     public void searchPeople(String searchString) {
 
-        final Person person1 = new Person();
-        person1.setNickname("nome");
-        person1.setName("nome q n é apelido");
+        Person person3 = new Person();
+        person3.setNickname("lufi");
+        person3.setName("Lufi");
+        person3.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/3.jpg"));
 
-        final Person person2 = new Person();
-        person2.setNickname("name");
-        person2.setName("aaaaa");
-        //person.setIcon(BitmapFactory.decodeFile("/documents/raw:/storage/emulated/0/Download/goku totosa.jpg"));
-
-        final Person[] peopleaaasa = new Person[]{person1, person2};
+        final Person[] peopleaaasa = new Person[]{person3};
         people.setValue(peopleaaasa);
     }
 }

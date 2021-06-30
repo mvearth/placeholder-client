@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Person person) {
                 if (person != null) {
-                    //personIcon.setImageBitmap(person.getIcon());
+                    personIcon.setImageBitmap(person.getIcon());
                     personNameTextView.setText(person.getName());
                     personNicknameTextView.setText(person.getNickname());
                     followersTextView.setText(Long.toString(person.getFollowers()));

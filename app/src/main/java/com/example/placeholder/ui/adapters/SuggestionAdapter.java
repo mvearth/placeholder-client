@@ -25,6 +25,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
         private final TextView personNickname;
         private final TextView suggestionTitle;
         private final TextView suggestionDescription;
+        private final ImageView suggestionImage;
 
         public ViewHolder(View view) {
             super(view);
@@ -34,6 +35,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
             personNickname = (TextView) view.findViewById(R.id.txtView_personNickname);
             suggestionTitle = (TextView) view.findViewById((R.id.txtView_suggestionTitle));
             suggestionDescription = (TextView) view.findViewById(R.id.txtView_suggestionDescription);
+            suggestionImage = (ImageView) view.findViewById(R.id.imgView_suggestionFirstImage);
         }
 
         public ImageView getPersonIcon() {
@@ -50,6 +52,10 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
         public TextView getSuggestionDescription() {
             return suggestionDescription;
+        }
+
+        public ImageView getSuggestionFirstImage() {
+            return suggestionImage;
         }
     }
 
@@ -69,13 +75,14 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        //viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
+        viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
         viewHolder.getPersonNickname().setText(localDataSet[position].getPerson().getNickname());
         viewHolder.getSuggestionTitle().setText(
                 localDataSet[position].getSuggestionType().toString() +
                 " - " +
                 localDataSet[position].getTitle());
         viewHolder.getSuggestionDescription().setText(localDataSet[position].getDescription());
+        viewHolder.getSuggestionFirstImage().setImageBitmap(localDataSet[position].getImages()[0]);
     }
 
     @Override

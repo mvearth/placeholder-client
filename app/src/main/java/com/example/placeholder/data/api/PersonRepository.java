@@ -1,5 +1,8 @@
 package com.example.placeholder.data.api;
 
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.placeholder.data.model.Person;
@@ -70,11 +73,14 @@ public class PersonRepository {
 
     public LiveData<Person> getPerson(String nickname){
         MutableLiveData<Person> liveperson = new MutableLiveData<>();
-        Person person = new Person();
-        person.setName("putaria");
-        person.setNickname("sexo kk");
+        Person person2 = new Person();
+        person2.setNickname("subaru");
+        person2.setName("Subaru loves Emilia");
+        person2.setFollowing(3);
+        person2.setFollowers(894654);
+        person2.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/2.jpg"));
 
-        liveperson.setValue(person);
+        liveperson.setValue(person2);
 
         return liveperson;
     }

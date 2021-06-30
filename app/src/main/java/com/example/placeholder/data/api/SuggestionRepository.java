@@ -1,13 +1,16 @@
 package com.example.placeholder.data.api;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Environment;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.placeholder.R;
 import com.example.placeholder.data.model.BookSuggestion;
 import com.example.placeholder.data.model.MovieSuggestion;
 import com.example.placeholder.data.model.OtherSuggestion;
@@ -16,61 +19,123 @@ import com.example.placeholder.data.model.SongSuggestion;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.data.model.SuggestionType;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+
 public class SuggestionRepository {
     private MutableLiveData<Suggestion> randomSuggestion = new MutableLiveData<>();
 
     public LiveData<Suggestion[]> getFollowingSuggestions(String nickname) {
         final MutableLiveData<Suggestion[]> data = new MutableLiveData<>();
 
-        final Person person = new Person();
-        person.setNickname("nome");
-        //person.setIcon(BitmapFactory.decodeFile("/documents/raw:/storage/emulated/0/Download/goku totosa.jpg"));
+        Person person1 = new Person();
+        person1.setNickname("eren and Titan");
+        person1.setName("Titan");
+        person1.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/1.jpg"));
 
-        final BookSuggestion bookSuggestion = new BookSuggestion();
-        bookSuggestion.setDescription("meu livrin");
-        bookSuggestion.setTitle("o libro fasdiofjadsp");
-        bookSuggestion.setPerson(person);
+        Person person2 = new Person();
+        person2.setNickname("subaru");
+        person2.setName("Subaru loves Emilia");
+        person2.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/2.jpg"));
 
-        final Suggestion[] suggestions = new Suggestion[]{bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion};
+        Person person3 = new Person();
+        person3.setNickname("lufi");
+        person3.setName("Lufi");
+        person3.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/3.jpg"));
+
+        Person person4 = new Person();
+        person4.setNickname("person");
+        person4.setName("Hi im human");
+        person4.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/4.jpg"));
+
+        Suggestion suggestion1 = new BookSuggestion();
+        suggestion1.setTitle("Harry Potter");
+        suggestion1.setDescription("Wizards, magic, cool moves. I liked it!");
+        suggestion1.setPerson(person1);
+        suggestion1.setImages(new Bitmap[]{
+                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Hp.png")
+        });
+
+        Suggestion suggestion2 = new SongSuggestion();
+        suggestion2.setTitle("Yonkers");
+        suggestion2.setDescription("It's not a light song");
+        suggestion2.setPerson(person2);
+        suggestion2.setImages(new Bitmap[]{
+                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/TtheC.png")
+        });
+
+        Suggestion suggestion3 = new MovieSuggestion();
+        suggestion3.setTitle("Tenet");
+        suggestion3.setDescription("Wtf, it doesn't make any sense! What the hell?");
+        suggestion3.setPerson(person3);
+        suggestion3.setImages(new Bitmap[]{
+                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Tenet.png")
+        });
+
+        Suggestion suggestion4 = new MovieSuggestion();
+        suggestion4.setTitle("Flaked");
+        suggestion4.setDescription("Hispters TV show");
+        suggestion4.setPerson(person4);
+        suggestion4.setImages(new Bitmap[]{
+                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Flaked.jpg")
+        });
+
+        final Suggestion[] suggestions = new Suggestion[]{suggestion1, suggestion2, suggestion3, suggestion4};
         data.setValue(suggestions);
 
         return data;
     }
 
-    public LiveData<Suggestion[]> getUserSuggestions(String nickname){
+    public LiveData<Suggestion[]> getUserSuggestions(String nickname) {
         final MutableLiveData<Suggestion[]> data = new MutableLiveData<>();
 
-        final Person person = new Person();
-        person.setNickname("nome");
-        //person.setIcon(BitmapFactory.decodeFile("/documents/raw:/storage/emulated/0/Download/goku totosa.jpg"));
+        Person person2 = new Person();
+        person2.setNickname("subaru");
+        person2.setName("Subaru loves Emilia");
+        person2.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/2.jpg"));
 
-        final BookSuggestion bookSuggestion = new BookSuggestion();
-        bookSuggestion.setDescription("meu livrin");
-        bookSuggestion.setTitle("o libro fasdiofjadsp");
-        bookSuggestion.setPerson(person);
+        Suggestion suggestion2 = new SongSuggestion();
+        suggestion2.setTitle("Yonkers");
+        suggestion2.setDescription("It's not a light song");
+        suggestion2.setPerson(person2);
+        suggestion2.setImages(new Bitmap[]{
+                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/TtheC.png")
+        });
 
-        final Suggestion[] suggestions = new Suggestion[]{bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion, bookSuggestion};
+        final Suggestion[] suggestions = new Suggestion[]{suggestion2};
         data.setValue(suggestions);
 
         return data;
     }
 
-    public void updateRandomSuggestion(SuggestionType suggestionType){
-        if (suggestionType == SuggestionType.BookSuggestion){
-            BookSuggestion bookSuggestion = new BookSuggestion();
-            bookSuggestion.setTitle("o livro lá");
+    public void updateRandomSuggestion(SuggestionType suggestionType) {
+        if (suggestionType == SuggestionType.BookSuggestion) {
+            Suggestion suggestion1 = new BookSuggestion();
+            suggestion1.setTitle("Harry Potter");
+            suggestion1.setDescription("Wizards, magic, cool moves. I liked it!");
+            suggestion1.setImages(new Bitmap[]{
+                    BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Hp.png")
+            });
 
-            randomSuggestion.setValue(bookSuggestion);
+            randomSuggestion.setValue(suggestion1);
         }
 
-        if (suggestionType == SuggestionType.MovieSuggestion){
-            MovieSuggestion bookSuggestion = new MovieSuggestion();
-            bookSuggestion.setTitle("o filme lá");
+        if (suggestionType == SuggestionType.MovieSuggestion) {
+            Suggestion suggestion3 = new MovieSuggestion();
+            suggestion3.setTitle("Tenet");
+            suggestion3.setDescription("Wtf, it doesn't make any sense! What the hell?");
+            suggestion3.setImages(new Bitmap[]{
+                    BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Tenet.png")
+            });
 
-            randomSuggestion.setValue(bookSuggestion);
+            randomSuggestion.setValue(suggestion3);
         }
 
-        if (suggestionType == SuggestionType.SongSuggestion){
+        if (suggestionType == SuggestionType.SongSuggestion) {
             SongSuggestion bookSuggestion = new SongSuggestion();
             bookSuggestion.setTitle("o som lá");
 
@@ -78,7 +143,7 @@ public class SuggestionRepository {
         }
 
         if (suggestionType == SuggestionType.OtherSuggestion
-            || suggestionType == SuggestionType.RandomSuggestion){
+                || suggestionType == SuggestionType.RandomSuggestion) {
             OtherSuggestion bookSuggestion = new OtherSuggestion();
             bookSuggestion.setTitle("o aaaaaa lá");
 
@@ -86,7 +151,7 @@ public class SuggestionRepository {
         }
     }
 
-    public LiveData<Suggestion> getRandomSuggestion(){
+    public LiveData<Suggestion> getRandomSuggestion() {
         return this.randomSuggestion;
     }
 }

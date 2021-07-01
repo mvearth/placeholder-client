@@ -1,16 +1,12 @@
-package com.example.placeholder.data.api;
+package com.example.placeholder.data.repository;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Environment;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.placeholder.R;
 import com.example.placeholder.data.model.BookSuggestion;
 import com.example.placeholder.data.model.MovieSuggestion;
 import com.example.placeholder.data.model.OtherSuggestion;
@@ -18,13 +14,6 @@ import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.SongSuggestion;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.data.model.SuggestionType;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 
 public class SuggestionRepository {
     private MutableLiveData<Suggestion> randomSuggestion = new MutableLiveData<>();

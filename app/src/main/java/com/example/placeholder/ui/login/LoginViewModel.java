@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.placeholder.data.api.PersonRepository;
+import com.example.placeholder.data.repository.PersonRepository;
 import com.example.placeholder.data.model.Person;
 
 public class LoginViewModel extends ViewModel {

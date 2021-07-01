@@ -1,7 +1,11 @@
 package com.example.placeholder.ui.signup;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.placeholder.data.api.PersonRepository;
+import com.example.placeholder.R;
+import com.example.placeholder.data.model.Person;
+import com.example.placeholder.data.repository.PersonRepository;
 import com.example.placeholder.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private SignUpViewModel signUpViewModel;
     private ActivitySignUpBinding binding;
+    private LiveData<Integer> signupResult = new  MutableLiveData<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,12 +44,33 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = nameEditText.getText().toString();
+                String nickname = nicknameEditText.getText().toString();
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String passwordConfirm = passwordConfirmEditText.getText().toString();
 
                 if (validate(name, email, password, passwordConfirm)) {
-                    signUpViewModel.signUp(name, email, password, passwordConfirm);
+                    signupResult = signUpViewModel.signUp(name, nickname, email, password);
+                }
+            }
+        });
+
+        signupResult.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer signupResult) {
+                switch (signupResult) {
+                    case 200: {
+                        showMessage(R.string.signup_successful);
+                        break;
+                    }
+                    case 409: {
+                        showMessage(R.string.user_already_exists);
+                        break;
+                    }
+                    default: {
+                        showMessage(R.string.cannot_signup);
+                        break;
+                    }
                 }
             }
         });
@@ -51,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validate(String nickName, String email, String password, String passwordConfirm) {
         @StringRes Integer result = signUpViewModel.validateSignUp(nickName, email, password, passwordConfirm);
         if (result != 0) {
-            showSignUpFailed(result);
+            showMessage(result);
 
             return false;
         }
@@ -59,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showSignUpFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    private void showMessage(@StringRes Integer messageString) {
+        Toast.makeText(getApplicationContext(), messageString, Toast.LENGTH_SHORT).show();
     }
 }

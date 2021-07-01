@@ -1,26 +1,32 @@
-package com.example.placeholder.data.api;
+package com.example.placeholder.data.repository;
 
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.placeholder.data.api.ApiClient;
+import com.example.placeholder.data.api.services.PersonService;
 import com.example.placeholder.data.model.Person;
 
-/**
- * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PersonRepository {
+
+    final PersonService personService;
 
     private static volatile PersonRepository instance;
 
-    // If user credentials will be cached in local storage, it is recommended it be encrypted
-    // @see https://developer.android.com/training/articles/keystore
     private MutableLiveData<Person> person = new MutableLiveData<>();
 
     // private constructor : singleton access
-    private PersonRepository() {}
+    private PersonRepository() {
+        personService = ApiClient.getClient().create(PersonService.class);
+    }
 
     public static PersonRepository getInstance() {
         if (instance == null) {
@@ -45,25 +51,16 @@ public class PersonRepository {
     }
 
     public LiveData<Person> login(String personName, String password) {
-        // handle login
-       // Result<Person> result = dataSource.login(username, password);
-        //if (result instanceof Result.Success) {
-       //     setLoggedInUser(((Result.Success<Person>) result).getData());
-        //}
-        //return result;
-
         this.person.setValue(this.getPerson("").getValue());
 
         return this.person;
     }
 
     public boolean checkEmailExists(String email) {
-        //return dataSource.checkEmailExists(email);
         return true;
     }
 
     public boolean checkNicknameExists(String nickname) {
-        //return dataSource.checkNicknameExists(nickname);
         return true;
     }
 
@@ -83,5 +80,30 @@ public class PersonRepository {
         liveperson.setValue(person2);
 
         return liveperson;
+    }
+
+    public LiveData<Integer> signUp(String name, String nickname, String email, String password) {
+        Person person = new Person();
+        person.setName(name);
+        person.setNickname(nickname);
+        person.setEmail(email);
+        person.setPassword(password);
+
+        final MutableLiveData<Integer> result = new MutableLiveData<Integer>();
+
+        Call<Person> call = personService.signUp(person);
+        call.enqueue(new Callback<Person>() {
+            @Override
+            public void onResponse(Call<Person> call, Response<Person> response) {
+                result.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Person> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+        return result;
     }
 }

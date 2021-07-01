@@ -2,12 +2,30 @@ package com.example.placeholder.data.model;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Person {
+    @SerializedName("name")
+    @Expose
     private String name;
+
+    @SerializedName("nickname")
+    @Expose
     private String nickname;
+
+    @SerializedName("email")
+    @Expose
     private String email;
+
+    @SerializedName("password")
+    @Expose
     private String password;
+
+    @SerializedName("photo")
+    @Expose
     private Bitmap icon;
+
     private long followers;
     private long following;
 

@@ -1,18 +1,12 @@
-package com.example.placeholder.data.api;
+package com.example.placeholder.data.repository;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Environment;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.placeholder.data.model.BookSuggestion;
 import com.example.placeholder.data.model.Person;
-import com.example.placeholder.data.model.Suggestion;
-import com.example.placeholder.ui.search.SearchViewModel;
 
 public class SearchRepository {
 

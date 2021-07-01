@@ -3,8 +3,8 @@ package com.example.placeholder.ui.profile;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.placeholder.data.api.PersonRepository;
-import com.example.placeholder.data.api.SuggestionRepository;
+import com.example.placeholder.data.repository.PersonRepository;
+import com.example.placeholder.data.repository.SuggestionRepository;
 import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
 

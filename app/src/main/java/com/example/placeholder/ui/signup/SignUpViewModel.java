@@ -1,27 +1,29 @@
 package com.example.placeholder.ui.signup;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
 import com.example.placeholder.R;
-import com.example.placeholder.data.api.PersonRepository;
+import com.example.placeholder.data.repository.PersonRepository;
 import com.example.placeholder.data.model.Person;
 
 public class SignUpViewModel extends ViewModel {
 
-    private PersonRepository personRepository;
-    private MutableLiveData<Person> mutablePerson = new MutableLiveData<>();
+    final private PersonRepository personRepository;
+    final private MutableLiveData<Person> mutablePerson = new MutableLiveData<>();
 
     SignUpViewModel(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
-    public void signUp(String name, String nickName, String email, String password) {
-        // can be launched in a separate asynchronous job
+    public LiveData<Integer> signUp(String name, String nickname, String email, String password) {
+       return personRepository.signUp(name, nickname, email, password);
     }
 
     public LiveData<Person> getPerson(){

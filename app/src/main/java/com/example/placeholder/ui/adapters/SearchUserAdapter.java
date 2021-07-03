@@ -61,6 +61,9 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public void onBindViewHolder(SearchUserAdapter.ViewHolder viewHolder, final int position) {
+        if(localDataSet == null)
+            return;
+
         viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getIcon());
         viewHolder.getPersonNickname().setText(localDataSet[position].getNickname());
         viewHolder.getPersonName().setText(localDataSet[position].getName());
@@ -68,6 +71,9 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public int getItemCount() {
+        if(localDataSet == null)
+            return 0;
+
         return localDataSet.length;
     }
 }

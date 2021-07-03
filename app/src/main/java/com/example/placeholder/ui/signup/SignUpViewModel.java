@@ -30,15 +30,14 @@ public class SignUpViewModel extends ViewModel {
         return mutablePerson;
     }
 
-    // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
+    private boolean validateEmail(String email) {
+        if (email == null) {
             return false;
         }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+        if (email.contains("@")) {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
         } else {
-            return !username.trim().isEmpty();
+            return !email.trim().isEmpty();
         }
     }
 
@@ -46,10 +45,6 @@ public class SignUpViewModel extends ViewModel {
         return password != null
                 && password.trim().length() > 5
                 && password.equals(passwordConfirm);
-    }
-
-    private boolean validateEmail(String email) {
-        return personRepository.checkEmailExists(email);
     }
 
     private boolean validateNickname(String nickname) {

@@ -15,8 +15,11 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SuggestionService {
-    @GET("/books/v1/volumes")
-    Call<List<Suggestion>> getFeedSuggestions(@Path("id") int id);
+    @POST("/publisher")
+    Call<Suggestion[]> postSuggestion(@Body Suggestion suggestion);
+
+    @POST("/publisher")
+    Call<Suggestion[]> getFeedSuggestions(@Body Suggestion suggestion);
 
     @GET("/books/v1/volumes")
     Call<List<Suggestion>> getOwnSuggestions(@Path("id") int id);

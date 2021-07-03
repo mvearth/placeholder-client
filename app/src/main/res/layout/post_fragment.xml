@@ -88,7 +88,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/txtView_suggestionType"
+                android:id="@+id/editText_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -98,7 +98,7 @@
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/txtView_suggestionTitle"
+                android:id="@+id/editText_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

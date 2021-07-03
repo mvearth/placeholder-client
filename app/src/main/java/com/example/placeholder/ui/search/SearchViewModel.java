@@ -3,26 +3,22 @@ package com.example.placeholder.ui.search;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.placeholder.data.repository.SearchRepository;
 import com.example.placeholder.data.model.Person;
+import com.example.placeholder.data.repository.PersonRepository;
 
 public class SearchViewModel extends ViewModel {
-    SearchRepository searchRepository;
-
-    private LiveData<Person[]> personArrayObservable;
+    PersonRepository personRepository;
 
     public SearchViewModel() {
-        searchRepository = new SearchRepository();
+        personRepository = PersonRepository.getInstance();
     }
 
     public LiveData<Person[]> getSearchedPeople() {
-        personArrayObservable = searchRepository.getSearchedPeople();
-
-        return personArrayObservable;
+        return personRepository.getSearchedPeople();
     }
 
     public void searchPeople(String searchString) {
-        searchRepository.searchPeople(searchString);
+        personRepository.searchPeople(searchString);
     }
 }
 

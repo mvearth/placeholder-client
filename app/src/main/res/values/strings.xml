@@ -22,4 +22,6 @@
     <string name="signup_successful">Signup Successful!</string>
     <string name="user_already_exists">A user with these email or nickname already exists!</string>
     <string name="cannot_signup">An error has occurred on signup!</string>
+    <string name="title_empty">Provide a title!</string>
+    <string name="suggestion_type_empty">Select a suggestion type!</string>
 </resources>

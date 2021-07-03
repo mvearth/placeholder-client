@@ -1,52 +1,44 @@
 package com.example.placeholder.ui.login;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
+import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.data.repository.PersonRepository;
 import com.example.placeholder.data.model.Person;
 
 public class LoginViewModel extends ViewModel {
 
-    private PersonRepository personRepository;
-    private MutableLiveData<Person> mutablePerson = new MutableLiveData<>();
+    final private PersonRepository personRepository;
 
     LoginViewModel(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
     public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
-        LiveData<Person> result = personRepository.login(username, password);
-
-        if (result.getValue() != null) {
-            mutablePerson.setValue(result.getValue());
-        }
-        else {
-            mutablePerson.setValue(null);
-        }
+        personRepository.login(username, password);
     }
 
-    public LiveData<Person> getPerson(){
-        return mutablePerson;
+    public LiveData<Person> getLoggedPerson(){
+        return personRepository.getLoggedPerson();
     }
 
-    // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
+    private boolean isUserNameValid(String email) {
+        if (email == null) {
             return false;
         }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+        if (email.contains("@")) {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
         } else {
-            return !username.trim().isEmpty();
+            return !email.trim().isEmpty();
         }
     }
 
-    // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }

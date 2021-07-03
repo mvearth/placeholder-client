@@ -3,10 +3,14 @@ package com.example.placeholder.data.repository;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.placeholder.data.api.ApiClient;
+import com.example.placeholder.data.api.services.PersonService;
+import com.example.placeholder.data.api.services.SuggestionService;
 import com.example.placeholder.data.model.BookSuggestion;
 import com.example.placeholder.data.model.MovieSuggestion;
 import com.example.placeholder.data.model.OtherSuggestion;
@@ -15,8 +19,27 @@ import com.example.placeholder.data.model.SongSuggestion;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.data.model.SuggestionType;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SuggestionRepository {
     private MutableLiveData<Suggestion> randomSuggestion = new MutableLiveData<>();
+
+    final private SuggestionService suggestionService;
+
+    private static volatile SuggestionRepository instance;
+
+    public SuggestionRepository(){
+        suggestionService = ApiClient.getClient().create(SuggestionService.class);
+    }
+
+    public static SuggestionRepository getInstance() {
+        if (instance == null) {
+            instance = new SuggestionRepository();
+        }
+        return instance;
+    }
 
     public LiveData<Suggestion[]> getFollowingSuggestions(String nickname) {
         final MutableLiveData<Suggestion[]> data = new MutableLiveData<>();
@@ -142,5 +165,25 @@ public class SuggestionRepository {
 
     public LiveData<Suggestion> getRandomSuggestion() {
         return this.randomSuggestion;
+    }
+
+    public void postSuggestion(Suggestion suggestion){
+        Call call = suggestionService.postSuggestion(suggestion);
+        call.enqueue(new Callback<Person[]>() {
+            @Override
+            public void onResponse(Call<Person[]> call, Response<Person[]> response) {
+                if(response.isSuccessful()){
+                    searchedPeople.setValue(response.body());
+                    return;
+                }
+
+                searchedPeople.setValue(null);
+            }
+
+            @Override
+            public void onFailure(Call<Person[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
     }
 }

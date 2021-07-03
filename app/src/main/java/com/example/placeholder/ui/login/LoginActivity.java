@@ -33,11 +33,11 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = new LoginViewModel(PersonRepository.getInstance());
 
-       // if (loginViewModel.getPerson() != null) {
-        //    startWholeApp();
-       //     setResult(Activity.RESULT_OK);
-        //    finish();
-        //}
+        if (loginViewModel.getLoggedPerson().getValue() != null) {
+            startWholeApp();
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button signUpButton = binding.signUp;
         final ProgressBar loadingProgressBar = binding.loading;
 
-        loginViewModel.getPerson().observe(this, new Observer<Person>() {
+        loginViewModel.getLoggedPerson().observe(this, new Observer<Person>() {
             @Override
             public void onChanged(@Nullable Person person) {
                 loadingProgressBar.setVisibility(View.GONE);

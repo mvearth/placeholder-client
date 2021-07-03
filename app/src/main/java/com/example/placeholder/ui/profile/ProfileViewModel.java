@@ -28,8 +28,4 @@ public class ProfileViewModel extends ViewModel {
     public LiveData<Person> getLoggedPerson(){
         return personRepository.getLoggedPerson();
     }
-
-    public LiveData<Person> getPerson(String nickname){
-        return personRepository.getPerson(nickname);
-    }
 }

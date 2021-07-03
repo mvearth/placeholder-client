@@ -80,7 +80,6 @@ public class SignUpActivity extends AppCompatActivity {
         @StringRes Integer result = signUpViewModel.validateSignUp(nickName, email, password, passwordConfirm);
         if (result != 0) {
             showMessage(result);
-
             return false;
         }
 

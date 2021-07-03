@@ -1,8 +1,18 @@
 package com.example.placeholder.ui.profile;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,9 +26,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.placeholder.R;
 import com.example.placeholder.data.model.Person;
@@ -27,6 +39,8 @@ import com.example.placeholder.databinding.ActivityLoginBinding;
 import com.example.placeholder.databinding.ProfileFragmentBinding;
 import com.example.placeholder.ui.adapters.SuggestionAdapter;
 import com.example.placeholder.ui.home.HomeViewModel;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ProfileFragment extends Fragment {
 
@@ -39,6 +53,9 @@ public class ProfileFragment extends Fragment {
     private TextView followersTextView;
     private TextView followingTextView;
 
+    private ActivityResultLauncher<String> getGalleryImage;
+    private ActivityResultLauncher<String> requestPermissionResultLauncher;
+
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
@@ -48,12 +65,31 @@ public class ProfileFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        personIcon = (ImageView) view.findViewById(R.id.imgView_personIcon);
+        getGalleryImage = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null)
+                personIcon.setImageURI(uri);
+        });
+
+        requestPermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) {
+                this.changeProfileIcon();
+            } else {
+                Toast.makeText(getContext(), R.string.cannot_signup, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        personIcon = (ImageButton) view.findViewById(R.id.imgButton_personIcon);
         personNameTextView = (TextView) view.findViewById(R.id.textView_personName);
         personNicknameTextView = (TextView) view.findViewById(R.id.textView_personNickname);
         followersTextView = (TextView) view.findViewById(R.id.textView_followers);
         followingTextView = (TextView) view.findViewById(R.id.textView_following);
 
+        personIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermissionResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        });
         return view;
     }
 
@@ -93,5 +129,9 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void changeProfileIcon() {
+        getGalleryImage.launch("image/*");
     }
 }

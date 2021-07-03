@@ -22,8 +22,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"/>
 
-        <ImageView
-            android:id="@+id/imgView_personIcon"
+        <ImageButton
+            android:id="@+id/imgButton_personIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

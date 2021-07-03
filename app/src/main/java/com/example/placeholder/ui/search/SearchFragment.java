@@ -79,7 +79,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Person[] people) {
                 if (people != null) {
-                    searchUserAdapter.setLocalDataSet(people);
+                    searchUserAdapter.setLocalDataSet(people, mViewModel);
                 }
             }
         });

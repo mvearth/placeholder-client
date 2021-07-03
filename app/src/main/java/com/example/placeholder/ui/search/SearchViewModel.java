@@ -20,5 +20,13 @@ public class SearchViewModel extends ViewModel {
     public void searchPeople(String searchString) {
         personRepository.searchPeople(searchString);
     }
+
+    public void updateFollowInfo(Person person){
+        personRepository.updateFollowInfo(person);
+    }
+
+    public boolean isFollowing(Person person){
+        return personRepository.getLoggedPerson().getValue().isFollowing(person);
+    }
 }
 

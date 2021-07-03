@@ -1,11 +1,17 @@
 package com.example.placeholder.data.model;
+
 import android.graphics.Bitmap;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Person implements Serializable {
     @SerializedName("name")
@@ -29,11 +35,12 @@ public class Person implements Serializable {
     private Bitmap icon;
 
     private Person[] followers;
-    private Person[] following;
+    private Person[] followings;
 
-    public Person() {}
+    public Person() {
+    }
 
-    public Person(String name, String nickname, String email, String password){
+    public Person(String name, String nickname, String email, String password) {
         this.name = name;
         this.nickname = nickname;
         this.email = email;
@@ -89,11 +96,11 @@ public class Person implements Serializable {
     }
 
     public Person[] getFollowings() {
-        return following;
+        return followings;
     }
 
-    public void setFollowings(Person[] following) {
-        this.following = following;
+    public void setFollowings(Person[] followings) {
+        this.followings = followings;
     }
 
     public long getFollowersCount() {
@@ -104,9 +111,38 @@ public class Person implements Serializable {
     }
 
     public long getFollowingsCount() {
-        if (following == null)
+        if (followings == null)
             return 0;
 
-        return following.length;
+        return followings.length;
+    }
+
+    public boolean isFollowing(Person person) {
+        return Arrays.asList(this.followings).contains((person));
+    }
+
+    public void followPerson(Person person) {
+        List<Person> personList = new LinkedList<Person>(Arrays.asList(this.followings));
+        personList.add(person);
+
+        this.followings = personList.toArray(this.followings);
+    }
+
+    public void unfollowPerson(Person person) {
+        List<Person> personList = new LinkedList<Person>(Arrays.asList(this.followings));
+        personList.remove(person);
+
+        this.followings = personList.toArray(this.followings);
+    }
+
+    @Override
+    public boolean equals(@Nullable @org.jetbrains.annotations.Nullable Object obj) {
+        Person person = (Person) obj;
+
+        if (person == null)
+            return false;
+
+        return this.nickname.equals(person.nickname)
+                && this.email.equals(person.email);
     }
 }

@@ -7,11 +7,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.placeholder.data.api.ApiClient;
 import com.example.placeholder.data.api.services.PersonService;
+import com.example.placeholder.data.model.Follow;
 import com.example.placeholder.data.model.Login;
 import com.example.placeholder.data.model.Person;
 import com.google.gson.Gson;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +22,7 @@ public class PersonRepository {
 
     private static volatile PersonRepository instance;
 
-    private MutableLiveData<Person> person = new MutableLiveData<>();
+    private MutableLiveData<Person> loggedPerson = new MutableLiveData<>();
 
     private MutableLiveData<Person[]> searchedPeople = new MutableLiveData<>();
 
@@ -40,16 +39,16 @@ public class PersonRepository {
     }
 
     public boolean isLoggedIn() {
-        return person != null;
+        return loggedPerson != null;
     }
 
     public void logout() {
-        person = null;
+        loggedPerson = null;
         //dataSource.logout();
     }
 
     private void setLoggedInUser(Person person) {
-        this.person.setValue(person);
+        this.loggedPerson.setValue(person);
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
     }
@@ -59,12 +58,12 @@ public class PersonRepository {
         call.enqueue(new Callback<Person>() {
             @Override
             public void onResponse(Call<Person> call, Response<Person> response) {
-                if(response.isSuccessful()){
-                    person.setValue(response.body());
+                if (response.isSuccessful()) {
+                    loggedPerson.setValue(response.body());
                     return;
                 }
 
-                person.setValue(null);
+                loggedPerson.setValue(null);
             }
 
             @Override
@@ -74,12 +73,12 @@ public class PersonRepository {
         });
     }
 
-    public void searchPeople(String value){
+    public void searchPeople(String value) {
         Call<Person[]> call = personService.searchPeople(value);
         call.enqueue(new Callback<Person[]>() {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     searchedPeople.setValue(response.body());
                     return;
                 }
@@ -103,16 +102,16 @@ public class PersonRepository {
         return true;
     }
 
-    public LiveData<Person> getLoggedPerson(){
-        return this.person;
+    public LiveData<Person> getLoggedPerson() {
+        return this.loggedPerson;
     }
 
-    public LiveData<Person[]> getSearchedPeople(){
+    public LiveData<Person[]> getSearchedPeople() {
         return this.searchedPeople;
     }
 
-/*    public LiveData<Person> getPerson(String nickname){
-        *//*MutableLiveData<Person> liveperson = new MutableLiveData<>();
+    /*    public LiveData<Person> getPerson(String nickname){
+     *//*MutableLiveData<Person> liveperson = new MutableLiveData<>();
         Person person2 = new Person();
         person2.setNickname("subaru");
         person2.setName("Subaru loves Emilia");
@@ -153,20 +152,20 @@ public class PersonRepository {
     }
 
     public void getFollowsInfo() {
-        if (person.getValue() == null
-            || person.getValue().getEmail() == null)
+        if (loggedPerson.getValue() == null
+                || loggedPerson.getValue().getEmail() == null)
             return;
 
-        Call<Person[]> followersCall = personService.getFollowers(person.getValue().getEmail());
+        Call<Person[]> followersCall = personService.getFollowers(loggedPerson.getValue().getEmail());
         followersCall.enqueue(new Callback<Person[]>() {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
-                if(response.isSuccessful()){
-                    person.getValue().setFollowers(response.body());
+                if (response.isSuccessful()) {
+                    loggedPerson.getValue().setFollowers(response.body());
                     return;
                 }
 
-                person.getValue().setFollowers(null);
+                loggedPerson.getValue().setFollowers(null);
             }
 
             @Override
@@ -175,20 +174,67 @@ public class PersonRepository {
             }
         });
 
-        Call<Person[]> followingsCall = personService.getFollowings(person.getValue().getEmail());
+        Call<Person[]> followingsCall = personService.getFollowings(loggedPerson.getValue().getEmail());
         followingsCall.enqueue(new Callback<Person[]>() {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
-                if(response.isSuccessful()){
-                    person.getValue().setFollowings(response.body());
+                if (response.isSuccessful()) {
+                    loggedPerson.getValue().setFollowings(response.body());
                     return;
                 }
 
-                person.getValue().setFollowings(null);
+                loggedPerson.getValue().setFollowings(null);
             }
 
             @Override
             public void onFailure(Call<Person[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void updateFollowInfo(Person person) {
+        if (this.loggedPerson.getValue().isFollowing((person))) {
+            this.unfollowPerson(person);
+        }
+        else {
+            this.followPerson(person);
+        }
+    }
+
+    public void followPerson(Person person) {
+        Follow follow = new Follow(person.getEmail(), this.loggedPerson.getValue().getEmail());
+
+        Call<Object> call = personService.postFollowing(follow);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.isSuccessful()) {
+                    loggedPerson.getValue().followPerson(person);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void unfollowPerson(Person person) {
+        Follow follow = new Follow(person.getEmail(), this.loggedPerson.getValue().getEmail());
+
+        Call<Object> call = personService.delFollowing(follow);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.isSuccessful()) {
+                    loggedPerson.getValue().unfollowPerson(person);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });

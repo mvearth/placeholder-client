@@ -1,5 +1,6 @@
 package com.example.placeholder.data.api.services;
 
+import com.example.placeholder.data.model.Follow;
 import com.example.placeholder.data.model.Login;
 import com.example.placeholder.data.model.Person;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
@@ -28,4 +30,10 @@ public interface PersonService {
 
     @GET("/followings/{email}")
     Call<Person[]> getFollowings(@Path("email") String email);
+
+    @POST("/follow")
+    Call<Object> postFollowing(@Body Follow follow);
+
+    @HTTP(method = "DELETE", path = "/follow", hasBody = true)
+    Call<Object> delFollowing(@Body Follow follow);
 }

@@ -168,7 +168,7 @@ public class SuggestionRepository {
     }
 
     public void postSuggestion(Suggestion suggestion){
-        Call call = suggestionService.postSuggestion(suggestion);
+/*        Call call = suggestionService.postSuggestion(suggestion);
         call.enqueue(new Callback<Person[]>() {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
@@ -184,6 +184,6 @@ public class SuggestionRepository {
             public void onFailure(Call<Person[]> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
-        });
+        });*/
     }
 }

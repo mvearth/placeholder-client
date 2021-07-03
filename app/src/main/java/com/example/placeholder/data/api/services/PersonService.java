@@ -23,9 +23,9 @@ public interface PersonService {
     @GET("/person/search/{value}")
     Call<Person[]> searchPeople(@Path("value") String value);
 
-    @GET("/person/followers/{nickname}")
-    Call<List<Person>> getFollowers(@Path("nickname") String nickname);
+    @GET("/followers/{email}")
+    Call<Person[]> getFollowers(@Path("email") String email);
 
-    @GET("/person/following/{nickname}")
-    Call<List<Person>> getFollowing(@Path("nickname") String nickname);
+    @GET("/followings/{email}")
+    Call<Person[]> getFollowings(@Path("email") String email);
 }

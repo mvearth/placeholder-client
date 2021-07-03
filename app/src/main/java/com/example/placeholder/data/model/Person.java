@@ -28,8 +28,8 @@ public class Person implements Serializable {
     @Expose
     private Bitmap icon;
 
-    private long followers;
-    private long following;
+    private Person[] followers;
+    private Person[] following;
 
     public Person() {}
 
@@ -80,19 +80,33 @@ public class Person implements Serializable {
         this.icon = icon;
     }
 
-    public long getFollowers() {
+    public Person[] getFollowers() {
         return followers;
     }
 
-    public void setFollowers(long followers) {
+    public void setFollowers(Person[] followers) {
         this.followers = followers;
     }
 
-    public long getFollowing() {
+    public Person[] getFollowings() {
         return following;
     }
 
-    public void setFollowing(long following) {
+    public void setFollowings(Person[] following) {
         this.following = following;
+    }
+
+    public long getFollowersCount() {
+        if (followers == null)
+            return 0;
+
+        return followers.length;
+    }
+
+    public long getFollowingsCount() {
+        if (following == null)
+            return 0;
+
+        return following.length;
     }
 }

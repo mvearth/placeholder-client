@@ -3,6 +3,7 @@ package com.example.placeholder.ui.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         private final ImageView personIcon;
         private final TextView personNickname;
         private final TextView personName;
+        private final Button followOrUnfollowButton;
 
         public ViewHolder(View view) {
             super(view);
@@ -30,6 +32,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
             personIcon = (ImageView) view.findViewById(R.id.imgView_personIcon);
             personNickname = (TextView) view.findViewById(R.id.txtView_personNickname);
             personName = (TextView) view.findViewById((R.id.txtView_personName));
+            followOrUnfollowButton = (Button) view.findViewById(R.id.button_followORUnfollowPerson);
         }
 
         public ImageView getPersonIcon() {
@@ -42,6 +45,10 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
         public TextView getPersonName() {
             return personName;
+        }
+
+        public Button getFollowOrUnfollowButton() {
+            return followOrUnfollowButton;
         }
     }
 
@@ -67,6 +74,8 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getIcon());
         viewHolder.getPersonNickname().setText(localDataSet[position].getNickname());
         viewHolder.getPersonName().setText(localDataSet[position].getName());
+
+        viewHolder.getFollowOrUnfollowButton().setText(R.string.follow_person_text);
     }
 
     @Override

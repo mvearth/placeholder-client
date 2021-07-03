@@ -55,7 +55,7 @@ public class PostFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radioButton_song:
-                        suggestionType = SuggestionType.SongSuggestion);
+                        suggestionType = SuggestionType.SongSuggestion;
                         break;
                     case R.id.radioButton_movie:
                         suggestionType = SuggestionType.MovieSuggestion;
@@ -73,7 +73,7 @@ public class PostFragment extends Fragment {
             }
         });
 
-        postButton.setOnClickListener(new View.OnClickListener() {
+/*        postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = titleEditText.getText().toString();
@@ -84,7 +84,7 @@ public class PostFragment extends Fragment {
                     signupResult = signUpViewModel.signUp(name, nickname, email, password);
                 }
             }
-        });
+        });*/
 
         return view;
     }

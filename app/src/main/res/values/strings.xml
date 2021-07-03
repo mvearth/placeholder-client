@@ -24,4 +24,6 @@
     <string name="cannot_signup">An error has occurred on signup!</string>
     <string name="title_empty">Provide a title!</string>
     <string name="suggestion_type_empty">Select a suggestion type!</string>
+    <string name="follow_person_text">Follow</string>
+    <string name="unfollow_person_text">Unfollow</string>
 </resources>

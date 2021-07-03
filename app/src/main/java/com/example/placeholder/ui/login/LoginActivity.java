@@ -57,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(R.string.login_failed);
                     return;
                 }
+                
+                loginViewModel.getFollowsInfo();
+
                 startWholeApp();
                 setResult(Activity.RESULT_OK);
                 finish();

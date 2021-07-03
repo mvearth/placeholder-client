@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -121,11 +123,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Person person) {
                 if (person != null) {
-                    personIcon.setImageBitmap(person.getIcon());
+                    Bitmap personImageBitmap = person.getIcon();
+
+                    if (personImageBitmap == null)
+                        personIcon.setImageResource(R.drawable.ic_person_24dp);
+                    else
+                        personIcon.setImageBitmap(personImageBitmap);
+
                     personNameTextView.setText(person.getName());
                     personNicknameTextView.setText(person.getNickname());
-                    followersTextView.setText(Long.toString(person.getFollowers()));
-                    followingTextView.setText(Long.toString(person.getFollowing()));
+                    followersTextView.setText(Long.toString(person.getFollowersCount()));
+                    followingTextView.setText(Long.toString(person.getFollowingsCount()));
                 }
             }
         });

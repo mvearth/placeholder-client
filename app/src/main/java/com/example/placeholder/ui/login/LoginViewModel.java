@@ -24,6 +24,10 @@ public class LoginViewModel extends ViewModel {
         personRepository.login(username, password);
     }
 
+    public void getFollowsInfo(){
+        personRepository.getFollowsInfo();
+    }
+
     public LiveData<Person> getLoggedPerson(){
         return personRepository.getLoggedPerson();
     }

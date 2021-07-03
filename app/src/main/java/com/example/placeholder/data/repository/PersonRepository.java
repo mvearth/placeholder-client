@@ -151,4 +151,46 @@ public class PersonRepository {
 
         return result;
     }
+
+    public void getFollowsInfo() {
+        if (person.getValue() == null
+            || person.getValue().getEmail() == null)
+            return;
+
+        Call<Person[]> followersCall = personService.getFollowers(person.getValue().getEmail());
+        followersCall.enqueue(new Callback<Person[]>() {
+            @Override
+            public void onResponse(Call<Person[]> call, Response<Person[]> response) {
+                if(response.isSuccessful()){
+                    person.getValue().setFollowers(response.body());
+                    return;
+                }
+
+                person.getValue().setFollowers(null);
+            }
+
+            @Override
+            public void onFailure(Call<Person[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+        Call<Person[]> followingsCall = personService.getFollowings(person.getValue().getEmail());
+        followingsCall.enqueue(new Callback<Person[]>() {
+            @Override
+            public void onResponse(Call<Person[]> call, Response<Person[]> response) {
+                if(response.isSuccessful()){
+                    person.getValue().setFollowings(response.body());
+                    return;
+                }
+
+                person.getValue().setFollowings(null);
+            }
+
+            @Override
+            public void onFailure(Call<Person[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
 }

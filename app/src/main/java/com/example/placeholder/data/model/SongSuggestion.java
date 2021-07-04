@@ -8,6 +8,10 @@ public class SongSuggestion extends Suggestion{
     private String album;
     private Date releaseDate;
 
+    public SongSuggestion() {
+        suggestionType = SuggestionType.SongSuggestion;
+    }
+
     public List<String> getArtists() {
         return artists;
     }
@@ -30,10 +34,5 @@ public class SongSuggestion extends Suggestion{
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    @Override
-    public SuggestionType getSuggestionType() {
-        return SuggestionType.SongSuggestion;
     }
 }

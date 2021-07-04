@@ -34,8 +34,8 @@ public class Person implements Serializable {
     @Expose
     private Bitmap icon;
 
-    private Person[] followers;
-    private Person[] followings;
+    private LinkedList<Person> followers;
+    private LinkedList<Person> followings;
 
     public Person() {
     }
@@ -87,19 +87,19 @@ public class Person implements Serializable {
         this.icon = icon;
     }
 
-    public Person[] getFollowers() {
+    public LinkedList<Person> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Person[] followers) {
+    public void setFollowers(LinkedList<Person> followers) {
         this.followers = followers;
     }
 
-    public Person[] getFollowings() {
+    public LinkedList<Person> getFollowings() {
         return followings;
     }
 
-    public void setFollowings(Person[] followings) {
+    public void setFollowings(LinkedList<Person> followings) {
         this.followings = followings;
     }
 
@@ -107,32 +107,26 @@ public class Person implements Serializable {
         if (followers == null)
             return 0;
 
-        return followers.length;
+        return followers.size();
     }
 
     public long getFollowingsCount() {
         if (followings == null)
             return 0;
 
-        return followings.length;
+        return followings.size();
     }
 
     public boolean isFollowing(Person person) {
-        return Arrays.asList(this.followings).contains((person));
+        return this.followings.contains(person);
     }
 
     public void followPerson(Person person) {
-        List<Person> personList = new LinkedList<Person>(Arrays.asList(this.followings));
-        personList.add(person);
-
-        this.followings = personList.toArray(this.followings);
+        this.followings.add(person);
     }
 
     public void unfollowPerson(Person person) {
-        List<Person> personList = new LinkedList<Person>(Arrays.asList(this.followings));
-        personList.remove(person);
-
-        this.followings = personList.toArray(this.followings);
+        this.followings.remove(person);
     }
 
     @Override

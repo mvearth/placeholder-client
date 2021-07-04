@@ -23,6 +23,7 @@
             android:text="Category" />
 
         <RadioGroup
+            android:id="@+id/radioButton_selectedCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

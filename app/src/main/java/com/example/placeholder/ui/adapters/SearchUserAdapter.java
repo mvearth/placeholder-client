@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.placeholder.R;
@@ -17,9 +19,11 @@ import com.example.placeholder.ui.search.SearchViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.LinkedList;
+
 public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
-    private Person[] localDataSet;
+    private LinkedList<Person> localDataSet;
     private SearchViewModel viewModel;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -40,7 +44,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
             followOrUnfollowButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (selectedPerson != null){
+                    if (selectedPerson != null) {
                         viewModel.updateFollowInfo(selectedPerson);
                     }
                 }
@@ -63,16 +67,16 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
             return followOrUnfollowButton;
         }
 
-        public void setViewModel(SearchViewModel viewModel){
+        public void setViewModel(SearchViewModel viewModel) {
             this.viewModel = viewModel;
         }
 
-        public void setSelectedPerson(Person person){
+        public void setSelectedPerson(Person person) {
             selectedPerson = person;
         }
     }
 
-    public void setLocalDataSet(Person[] dataSet, SearchViewModel searchViewModel) {
+    public void setLocalDataSet(LinkedList<Person> dataSet, SearchViewModel searchViewModel) {
         this.localDataSet = dataSet;
         this.viewModel = searchViewModel;
         notifyDataSetChanged();
@@ -95,16 +99,22 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         if (localDataSet == null)
             return;
 
-        viewHolder.setSelectedPerson(localDataSet[position]);
+        Person currentPerson = localDataSet.get(position);
 
-        viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getIcon());
-        viewHolder.getPersonNickname().setText(localDataSet[position].getNickname());
-        viewHolder.getPersonName().setText(localDataSet[position].getName());
+        viewHolder.setSelectedPerson(currentPerson);
 
-        if (viewModel.isFollowing(localDataSet[position]))
-            viewHolder.getFollowOrUnfollowButton().setText(R.string.unfollow_person_text);
+        viewHolder.getPersonIcon().setImageBitmap(currentPerson.getIcon());
+        viewHolder.getPersonNickname().setText(currentPerson.getNickname());
+        viewHolder.getPersonName().setText(currentPerson.getName());
+
+        if (viewModel.getLoggedPerson().getValue().equals(currentPerson))
+            viewHolder.getFollowOrUnfollowButton().setVisibility(View.GONE);
         else {
-            viewHolder.getFollowOrUnfollowButton().setText(R.string.follow_person_text);
+            if (viewModel.isFollowing(currentPerson))
+                viewHolder.getFollowOrUnfollowButton().setText(R.string.unfollow_person_text);
+            else {
+                viewHolder.getFollowOrUnfollowButton().setText(R.string.follow_person_text);
+            }
         }
     }
 
@@ -113,6 +123,6 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         if (localDataSet == null)
             return 0;
 
-        return localDataSet.length;
+        return localDataSet.size();
     }
 }

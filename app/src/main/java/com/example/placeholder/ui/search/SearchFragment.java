@@ -29,6 +29,7 @@ import com.example.placeholder.ui.adapters.SearchUserAdapter;
 import com.example.placeholder.ui.adapters.SuggestionAdapter;
 import com.example.placeholder.ui.home.HomeViewModel;
 
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class SearchFragment extends Fragment {
@@ -75,11 +76,20 @@ public class SearchFragment extends Fragment {
     }
 
     private void observeViewModel(SearchViewModel viewModel) {
-        viewModel.getSearchedPeople().observe(getViewLifecycleOwner(), new Observer<Person[]>() {
+        viewModel.getSearchedPeople().observe(getViewLifecycleOwner(), new Observer<LinkedList<Person>>() {
             @Override
-            public void onChanged(@Nullable Person[] people) {
+            public void onChanged(@Nullable LinkedList<Person> people) {
                 if (people != null) {
                     searchUserAdapter.setLocalDataSet(people, mViewModel);
+                }
+            }
+        });
+
+        viewModel.getFollowings().observe(getViewLifecycleOwner(), new Observer<LinkedList<Person>>() {
+            @Override
+            public void onChanged(@Nullable LinkedList<Person> people) {
+                if (people != null) {
+                    searchUserAdapter.setLocalDataSet(mViewModel.getSearchedPeople().getValue(), mViewModel);
                 }
             }
         });

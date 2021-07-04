@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
             if (isGranted) {
                 this.changeProfileIcon();
             } else {
-                Toast.makeText(getContext(), R.string.cannot_signup, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.storage_permission_not_granted, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -92,6 +92,7 @@ public class ProfileFragment extends Fragment {
                 requestPermissionResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
+
         return view;
     }
 
@@ -139,7 +140,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    public void changeProfileIcon() {
+    private void changeProfileIcon() {
         getGalleryImage.launch("image/*");
     }
 }

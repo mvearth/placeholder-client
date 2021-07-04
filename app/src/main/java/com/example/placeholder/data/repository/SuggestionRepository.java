@@ -30,7 +30,7 @@ public class SuggestionRepository {
 
     private static volatile SuggestionRepository instance;
 
-    public SuggestionRepository(){
+    public SuggestionRepository() {
         suggestionService = ApiClient.getClient().create(SuggestionService.class);
     }
 
@@ -68,33 +68,21 @@ public class SuggestionRepository {
         suggestion1.setTitle("Harry Potter");
         suggestion1.setDescription("Wizards, magic, cool moves. I liked it!");
         suggestion1.setPerson(person1);
-        suggestion1.setImages(new Bitmap[]{
-                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Hp.png")
-        });
 
         Suggestion suggestion2 = new SongSuggestion();
         suggestion2.setTitle("Yonkers");
         suggestion2.setDescription("It's not a light song");
         suggestion2.setPerson(person2);
-        suggestion2.setImages(new Bitmap[]{
-                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/TtheC.png")
-        });
 
         Suggestion suggestion3 = new MovieSuggestion();
         suggestion3.setTitle("Tenet");
         suggestion3.setDescription("Wtf, it doesn't make any sense! What the hell?");
         suggestion3.setPerson(person3);
-        suggestion3.setImages(new Bitmap[]{
-                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Tenet.png")
-        });
 
         Suggestion suggestion4 = new MovieSuggestion();
         suggestion4.setTitle("Flaked");
         suggestion4.setDescription("Hispters TV show");
         suggestion4.setPerson(person4);
-        suggestion4.setImages(new Bitmap[]{
-                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Flaked.jpg")
-        });
 
         final Suggestion[] suggestions = new Suggestion[]{suggestion1, suggestion2, suggestion3, suggestion4};
         data.setValue(suggestions);
@@ -114,9 +102,6 @@ public class SuggestionRepository {
         suggestion2.setTitle("Yonkers");
         suggestion2.setDescription("It's not a light song");
         suggestion2.setPerson(person2);
-        suggestion2.setImages(new Bitmap[]{
-                BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/TtheC.png")
-        });
 
         final Suggestion[] suggestions = new Suggestion[]{suggestion2};
         data.setValue(suggestions);
@@ -129,9 +114,6 @@ public class SuggestionRepository {
             Suggestion suggestion1 = new BookSuggestion();
             suggestion1.setTitle("Harry Potter");
             suggestion1.setDescription("Wizards, magic, cool moves. I liked it!");
-            suggestion1.setImages(new Bitmap[]{
-                    BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Hp.png")
-            });
 
             randomSuggestion.setValue(suggestion1);
         }
@@ -140,9 +122,6 @@ public class SuggestionRepository {
             Suggestion suggestion3 = new MovieSuggestion();
             suggestion3.setTitle("Tenet");
             suggestion3.setDescription("Wtf, it doesn't make any sense! What the hell?");
-            suggestion3.setImages(new Bitmap[]{
-                    BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/Tenet.png")
-            });
 
             randomSuggestion.setValue(suggestion3);
         }
@@ -167,23 +146,22 @@ public class SuggestionRepository {
         return this.randomSuggestion;
     }
 
-    public void postSuggestion(Suggestion suggestion){
-/*        Call call = suggestionService.postSuggestion(suggestion);
-        call.enqueue(new Callback<Person[]>() {
-            @Override
-            public void onResponse(Call<Person[]> call, Response<Person[]> response) {
-                if(response.isSuccessful()){
-                    searchedPeople.setValue(response.body());
-                    return;
-                }
+    public Integer postSuggestion(Suggestion suggestion) {
+        final MutableLiveData<Integer> result = new MutableLiveData<Integer>();
 
-                searchedPeople.setValue(null);
+        Call<Object> call = suggestionService.postSuggestion(suggestion);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                result.setValue(response.code());
             }
 
             @Override
-            public void onFailure(Call<Person[]> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
-        });*/
+        });
+
+        return result.getValue();
     }
 }

@@ -70,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+                loginViewModel.login(
+                        usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -83,17 +84,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void startWholeApp(){
+    private void startWholeApp() {
         Intent intent = new Intent(this, WholeAppActivity.class);
         startActivity(intent);
     }
 
-    private void startSignUp(){
+    private void startSignUp() {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private SignUpViewModel signUpViewModel;
     private ActivitySignUpBinding binding;
-    private LiveData<Integer> signupResult = new  MutableLiveData<>();
+    private MutableLiveData<Integer> signupResult = new MutableLiveData<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String passwordConfirm = passwordConfirmEditText.getText().toString();
 
                 if (validate(name, email, password, passwordConfirm)) {
-                    signupResult = signUpViewModel.signUp(name, nickname, email, password);
+                    signupResult.setValue(signUpViewModel.signUp(name, nickname, email, password));
                 }
             }
         });
@@ -87,6 +87,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void showMessage(@StringRes Integer messageString) {
-        Toast.makeText(getApplicationContext(), messageString, Toast.LENGTH_SHORT).show();
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), messageString, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

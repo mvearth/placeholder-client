@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 public class BookSuggestion extends Suggestion{
+
+    public BookSuggestion() {
+        suggestionType = SuggestionType.BookSuggestion;
+    }
+
     private List<String> authors;
 
     private Date publicationDate;
@@ -32,10 +37,5 @@ public class BookSuggestion extends Suggestion{
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
-    }
-
-    @Override
-    public SuggestionType getSuggestionType() {
-        return SuggestionType.BookSuggestion;
     }
 }

@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.placeholder.R;
+import com.example.placeholder.data.model.Helpers.BitmapHelper;
 import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.data.model.SuggestionType;
@@ -59,9 +60,6 @@ public class SuggestionFragment extends Fragment {
                     case R.id.radioButton_book:
                         mViewModel.updateRandomSuggestion(SuggestionType.BookSuggestion);
                         break;
-                    case R.id.radioButton_other_and_more:
-                        mViewModel.updateRandomSuggestion(SuggestionType.OtherSuggestion);
-                        break;
                     case R.id.radioButton_random:
                         mViewModel.updateRandomSuggestion(SuggestionType.RandomSuggestion);
                         break;
@@ -90,7 +88,9 @@ public class SuggestionFragment extends Fragment {
                 if (suggestion != null) {
                     suggestionType.setText(suggestion.getSuggestionType().toString());
                     suggestionTitle.setText(suggestion.getTitle());
-                    suggestionImage.setImageBitmap(suggestion.getImages()[0]);
+
+                    if (suggestion.getImages() != null)
+                        suggestionImage.setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getImages()[0]));
                 }
             }
         });

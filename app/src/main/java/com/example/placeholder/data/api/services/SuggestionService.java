@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 
 public interface SuggestionService {
     @POST("/publisher")
-    Call<Suggestion[]> postSuggestion(@Body Suggestion suggestion);
+    Call<Object> postSuggestion(@Body Suggestion suggestion);
 
     @POST("/publisher")
     Call<Suggestion[]> getFeedSuggestions(@Body Suggestion suggestion);

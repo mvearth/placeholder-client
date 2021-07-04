@@ -12,6 +12,9 @@ import com.example.placeholder.data.model.Login;
 import com.example.placeholder.data.model.Person;
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,8 +26,10 @@ public class PersonRepository {
     private static volatile PersonRepository instance;
 
     private MutableLiveData<Person> loggedPerson = new MutableLiveData<>();
+    private MutableLiveData<LinkedList<Person>> loggedPersonFollowings = new MutableLiveData<>();
+    private MutableLiveData<LinkedList<Person>> loggedPersonFollowers = new MutableLiveData<>();
 
-    private MutableLiveData<Person[]> searchedPeople = new MutableLiveData<>();
+    private MutableLiveData<LinkedList<Person>> searchedPeople = new MutableLiveData<>();
 
     // private constructor : singleton access
     private PersonRepository() {
@@ -79,7 +84,7 @@ public class PersonRepository {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
                 if (response.isSuccessful()) {
-                    searchedPeople.setValue(response.body());
+                    searchedPeople.setValue(new LinkedList<Person>(Arrays.asList(response.body())));
                     return;
                 }
 
@@ -106,8 +111,12 @@ public class PersonRepository {
         return this.loggedPerson;
     }
 
-    public LiveData<Person[]> getSearchedPeople() {
+    public LiveData<LinkedList<Person>> getSearchedPeople() {
         return this.searchedPeople;
+    }
+
+    public LiveData<LinkedList<Person>> getLoggedPersonFollowings() {
+        return this.loggedPersonFollowings;
     }
 
     /*    public LiveData<Person> getPerson(String nickname){
@@ -124,7 +133,7 @@ public class PersonRepository {
         return liveperson;*//*
     }*/
 
-    public LiveData<Integer> signUp(String name, String nickname, String email, String password) {
+    public Integer signUp(String name, String nickname, String email, String password) {
         Person person = new Person();
         person.setName(name);
         person.setNickname(nickname);
@@ -148,7 +157,7 @@ public class PersonRepository {
             }
         });
 
-        return result;
+        return result.getValue();
     }
 
     public void getFollowsInfo() {
@@ -161,7 +170,8 @@ public class PersonRepository {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
                 if (response.isSuccessful()) {
-                    loggedPerson.getValue().setFollowers(response.body());
+                    loggedPerson.getValue().setFollowers(new LinkedList<Person>(Arrays.asList(response.body())));
+                    loggedPersonFollowers.setValue(loggedPerson.getValue().getFollowers());
                     return;
                 }
 
@@ -179,7 +189,8 @@ public class PersonRepository {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
                 if (response.isSuccessful()) {
-                    loggedPerson.getValue().setFollowings(response.body());
+                    loggedPerson.getValue().setFollowings(new LinkedList<Person>(Arrays.asList(response.body())));
+                    loggedPersonFollowers.setValue(loggedPerson.getValue().getFollowings());
                     return;
                 }
 
@@ -196,8 +207,7 @@ public class PersonRepository {
     public void updateFollowInfo(Person person) {
         if (this.loggedPerson.getValue().isFollowing((person))) {
             this.unfollowPerson(person);
-        }
-        else {
+        } else {
             this.followPerson(person);
         }
     }
@@ -211,6 +221,7 @@ public class PersonRepository {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     loggedPerson.getValue().followPerson(person);
+                    loggedPersonFollowings.setValue(loggedPerson.getValue().getFollowings());
                 }
             }
 
@@ -230,6 +241,7 @@ public class PersonRepository {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     loggedPerson.getValue().unfollowPerson(person);
+                    loggedPersonFollowings.setValue(loggedPerson.getValue().getFollowings());
                 }
             }
 

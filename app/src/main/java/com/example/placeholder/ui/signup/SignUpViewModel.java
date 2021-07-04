@@ -22,7 +22,7 @@ public class SignUpViewModel extends ViewModel {
         this.personRepository = personRepository;
     }
 
-    public LiveData<Integer> signUp(String name, String nickname, String email, String password) {
+    public Integer signUp(String name, String nickname, String email, String password) {
        return personRepository.signUp(name, nickname, email, password);
     }
 

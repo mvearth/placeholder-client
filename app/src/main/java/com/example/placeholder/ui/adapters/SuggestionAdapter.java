@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.placeholder.R;
+import com.example.placeholder.data.model.Helpers.BitmapHelper;
 import com.example.placeholder.data.model.Suggestion;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +60,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
         }
     }
 
-    public void setLocalDataSet(Suggestion[] dataSet){
+    public void setLocalDataSet(Suggestion[] dataSet) {
         localDataSet = dataSet;
         notifyDataSetChanged();
     }
@@ -75,14 +76,18 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getPersonIcon().setImageBitmap(localDataSet[position].getPerson().getIcon());
-        viewHolder.getPersonNickname().setText(localDataSet[position].getPerson().getNickname());
+        Suggestion suggestion = localDataSet[position];
+
+        viewHolder.getPersonIcon().setImageBitmap(suggestion.getPerson().getIcon());
+        viewHolder.getPersonNickname().setText(suggestion.getPerson().getNickname());
         viewHolder.getSuggestionTitle().setText(
-                localDataSet[position].getSuggestionType().toString() +
-                " - " +
-                localDataSet[position].getTitle());
-        viewHolder.getSuggestionDescription().setText(localDataSet[position].getDescription());
-        viewHolder.getSuggestionFirstImage().setImageBitmap(localDataSet[position].getImages()[0]);
+                suggestion.getSuggestionType().toString() +
+                        " - " +
+                        suggestion.getTitle());
+        viewHolder.getSuggestionDescription().setText(suggestion.getDescription());
+
+        if (suggestion.getImages() != null)
+            viewHolder.getSuggestionFirstImage().setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getImages()[0]));
     }
 
     @Override

@@ -26,4 +26,7 @@
     <string name="suggestion_type_empty">Select a suggestion type!</string>
     <string name="follow_person_text">Follow</string>
     <string name="unfollow_person_text">Unfollow</string>
+    <string name="suggestion_published">Suggestion published successfully!</string>
+    <string name="suggestion_not_published">An error occurred when publishing your suggestion!</string>
+    <string name="storage_permission_not_granted">You must grant this permission in order to select an image!</string>
 </resources>

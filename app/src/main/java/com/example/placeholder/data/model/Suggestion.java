@@ -4,22 +4,30 @@ import android.graphics.Bitmap;
 import android.media.Image;
 
 import com.example.placeholder.ui.suggestion.SuggestionFragment;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
 
 public abstract class Suggestion {
-    private int suggestionId;
-
-    private int persionCreatorId;
+    private int id;
 
     private String title;
 
     private String description;
 
-    private Bitmap[] images;
+    @Expose
+    private byte[][] images;
 
     private Date suggestionDate;
+
+    @Expose(serialize = false, deserialize = false)
+    private Person person;
+
+    private String email;
+
+    protected SuggestionType suggestionType;
 
     public Person getPerson() {
         return person;
@@ -29,8 +37,6 @@ public abstract class Suggestion {
         this.person = person;
     }
 
-    private Person person;
-
     public String getDescription() {
         return description;
     }
@@ -39,11 +45,11 @@ public abstract class Suggestion {
         this.description = description;
     }
 
-    public Bitmap[] getImages() {
+    public byte[][] getImages() {
         return images;
     }
 
-    public void setImages(Bitmap[] images) {
+    public void setImages(byte[][] images) {
         this.images = images;
     }
 
@@ -63,6 +69,14 @@ public abstract class Suggestion {
         this.title = title;
     }
 
+    public String getPersonEmail() {
+        return email;
+    }
+
+    public void setPersonEmail(String email) {
+        this.email = email;
+    }
+
     public Date getSuggestionDate() {
         return suggestionDate;
     }
@@ -71,5 +85,7 @@ public abstract class Suggestion {
         this.suggestionDate = suggestionDate;
     }
 
-    public abstract SuggestionType getSuggestionType();
+    public SuggestionType getSuggestionType() {
+        return this.suggestionType;
+    }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewTreeLifecycleOwner;
 
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.example.placeholder.R;
 import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.repository.PersonRepository;
 import com.example.placeholder.databinding.ActivitySignUpBinding;
+
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -50,27 +53,25 @@ public class SignUpActivity extends AppCompatActivity {
                 String passwordConfirm = passwordConfirmEditText.getText().toString();
 
                 if (validate(name, email, password, passwordConfirm)) {
-                    signupResult.setValue(signUpViewModel.signUp(name, nickname, email, password));
-                }
-            }
-        });
-
-        signupResult.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer signupResult) {
-                switch (signupResult) {
-                    case 200: {
-                        showMessage(R.string.signup_successful);
-                        break;
-                    }
-                    case 409: {
-                        showMessage(R.string.user_already_exists);
-                        break;
-                    }
-                    default: {
-                        showMessage(R.string.cannot_signup);
-                        break;
-                    }
+                    signUpViewModel.signUp(name, nickname, email, password).observe(Objects.requireNonNull(ViewTreeLifecycleOwner.get(v)), new Observer<Integer>() {
+                        @Override
+                        public void onChanged(@Nullable Integer signupResult) {
+                            switch (signupResult) {
+                                case 200: {
+                                    showMessage(R.string.signup_successful);
+                                    break;
+                                }
+                                case 409: {
+                                    showMessage(R.string.user_already_exists);
+                                    break;
+                                }
+                                default: {
+                                    showMessage(R.string.cannot_signup);
+                                    break;
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });

@@ -133,7 +133,7 @@ public class PersonRepository {
         return liveperson;*//*
     }*/
 
-    public Integer signUp(String name, String nickname, String email, String password) {
+    public LiveData<Integer> signUp(String name, String nickname, String email, String password) {
         Person person = new Person();
         person.setName(name);
         person.setNickname(nickname);
@@ -141,8 +141,6 @@ public class PersonRepository {
         person.setPassword(password);
 
         final MutableLiveData<Integer> result = new MutableLiveData<Integer>();
-
-        String content = new Gson().toJson(person);
 
         Call<Person> call = personService.signUp(person);
         call.enqueue(new Callback<Person>() {
@@ -157,7 +155,7 @@ public class PersonRepository {
             }
         });
 
-        return result.getValue();
+        return result;
     }
 
     public void getFollowsInfo() {

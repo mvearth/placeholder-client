@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.util.Patterns;
 
 import androidx.annotation.StringRes;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.placeholder.R;
@@ -23,13 +24,15 @@ public class PostViewModel extends ViewModel {
         personRepository = PersonRepository.getInstance();
     }
 
-    public Integer postSuggestion(String title, String description, SuggestionType suggestionType, Bitmap bitmap) {
+    public LiveData<Integer> postSuggestion(String title, String description, SuggestionType suggestionType, Bitmap bitmap) {
         Suggestion suggestion = SuggestionFactory.createSuggestion(suggestionType);
         suggestion.setPerson(personRepository.getLoggedPerson().getValue());
         suggestion.setPersonEmail(suggestion.getPerson().getEmail());
         suggestion.setTitle(title);
         suggestion.setDescription(description);
-        suggestion.setImages(new byte[][]{BitmapHelper.convertToByteArray(bitmap)});
+
+        if (bitmap != null)
+            suggestion.setImages(new byte[][]{BitmapHelper.convertToByteArray(bitmap)});
 
         return suggestionRepository.postSuggestion(suggestion);
     }

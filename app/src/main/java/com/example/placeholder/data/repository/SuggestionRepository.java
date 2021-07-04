@@ -146,7 +146,7 @@ public class SuggestionRepository {
         return this.randomSuggestion;
     }
 
-    public Integer postSuggestion(Suggestion suggestion) {
+    public LiveData<Integer> postSuggestion(Suggestion suggestion) {
         final MutableLiveData<Integer> result = new MutableLiveData<Integer>();
 
         Call<Object> call = suggestionService.postSuggestion(suggestion);
@@ -162,6 +162,6 @@ public class SuggestionRepository {
             }
         });
 
-        return result.getValue();
+        return result;
     }
 }

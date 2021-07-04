@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -101,30 +102,33 @@ public class PostFragment extends Fragment {
             public void onClick(View v) {
                 String title = titleEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
-                Bitmap image = ((BitmapDrawable) suggestionImageView.getDrawable()).getBitmap();
+                Drawable drawable = suggestionImageView.getDrawable();
+                Bitmap image = null;
+
+                if (drawable != null) {
+                    image = ((BitmapDrawable)drawable).getBitmap();
+                }
 
                 if (validate(title, suggestionType)) {
-                    postViewModel.postSuggestion(title, description, suggestionType, image);
-                }
-            }
-        });
-
-        postResult.observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer suggestionResult) {
-                switch (suggestionResult) {
-                    case 200: {
-                        showMessage(R.string.suggestion_published);
-                        suggestionRadioGroup.setSelected(false);
-                        titleEditText.setText("");
-                        descriptionEditText.setText("");
-                        suggestionImageView.setImageBitmap(null);
-                        break;
-                    }
-                    default: {
-                        showMessage(R.string.suggestion_not_published);
-                        break;
-                    }
+                    postViewModel.postSuggestion(title, description, suggestionType, image).observe(getViewLifecycleOwner(), new Observer<Integer>() {
+                        @Override
+                        public void onChanged(@Nullable Integer suggestionResult) {
+                            switch (suggestionResult) {
+                                case 200: {
+                                    showMessage(R.string.suggestion_published);
+                                    suggestionRadioGroup.clearCheck();
+                                    titleEditText.setText("");
+                                    descriptionEditText.setText("");
+                                    suggestionImageView.setImageBitmap(null);
+                                    break;
+                                }
+                                default: {
+                                    showMessage(R.string.suggestion_not_published);
+                                    break;
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });

@@ -14,6 +14,9 @@ public class BitmapHelper {
     }
 
     public static byte[] convertToByteArray(Bitmap bitmap){
+        if (bitmap == null)
+            return null;
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
 

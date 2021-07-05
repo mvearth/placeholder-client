@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginViewModel = new LoginViewModel(PersonRepository.getInstance());
+        loginViewModel = new LoginViewModel();
 
         if (loginViewModel.getLoggedPerson().getValue() != null) {
             startWholeApp();

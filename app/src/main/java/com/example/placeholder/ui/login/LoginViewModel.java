@@ -16,8 +16,8 @@ public class LoginViewModel extends ViewModel {
 
     final private PersonRepository personRepository;
 
-    LoginViewModel(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    LoginViewModel() {
+        this.personRepository = PersonRepository.getInstance();
     }
 
     public void login(String username, String password) {

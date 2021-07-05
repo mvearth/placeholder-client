@@ -17,10 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.placeholder.R;
+import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.ui.adapters.SuggestionAdapter;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -51,23 +54,28 @@ public class HomeFragment extends Fragment {
         suggestionsRecyclerView.setHasFixedSize(true);
         suggestionsRecyclerView.setAdapter(suggestionAdapter);
 
-        //observeViewModel(mViewModel);
+        observeViewModel(mViewModel);
     }
 
-//    private void observeViewModel(HomeViewModel viewModel) {
-//        viewModel.getSuggestions("").observe(getViewLifecycleOwner(), new Observer<LinkedList<LiveData<Suggestion[]>>>() {
-//            @Override
-//            public void onChanged(@Nullable LinkedList<LiveData<Suggestion[]>> suggestions) {
-//                if (suggestions != null) {
-//                    LinkedList<Suggestion> suggestionsList = new LinkedList<>();
-//
-//                    for (LiveData<Suggestion[]> suggs: suggestions){
-//                        suggestionsList.addAll(Arrays.asList(Objects.requireNonNull(suggs.getValue())));
-//                    }
-//
-//                    suggestionAdapter.setLocalDataSet(suggestionsList);
-//                }
-//            }
-//        });
-   // }
+    private void observeViewModel(HomeViewModel viewModel) {
+        viewModel.getFollowingsSuggestions().observe(getViewLifecycleOwner(), new Observer<LinkedList<Suggestion>>() {
+            @Override
+            public void onChanged(@Nullable LinkedList<Suggestion> suggestions) {
+                if (suggestions != null) {
+
+                    for (Suggestion sugg : suggestions)
+                        sugg.setPerson(mViewModel.getLoggedPerson().getValue());
+
+                    Collections.sort(suggestions, new Comparator<Suggestion>() {
+                        @Override
+                        public int compare(Suggestion o1, Suggestion o2) {
+                            return o1.getSuggestionDate().compareTo(o2.getSuggestionDate()) * -1;
+                        }
+                    });
+
+                    suggestionAdapter.setLocalDataSet(suggestions);
+                }
+            }
+        });
+    }
 }

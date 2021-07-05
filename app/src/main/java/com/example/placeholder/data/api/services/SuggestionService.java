@@ -23,9 +23,6 @@ public interface SuggestionService {
     @POST("/publisher")
     Call<Object> postSuggestion(@Body Suggestion suggestion);
 
-    @POST("/publisher")
-    Call<Suggestion[]> getFeedSuggestions(@Body Suggestion suggestion);
-
     @GET("/publisher")
     Call<BookSuggestion[]> getOwnBookSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
@@ -37,6 +34,20 @@ public interface SuggestionService {
 
     @GET("/publisher")
     Call<OtherSuggestion[]> getOwnOtherSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+
+
+    @GET("/publisher/followings")
+    Call<BookSuggestion[]> getFeedBookSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+    @GET("/publisher/followings")
+    Call<SongSuggestion[]> getFeedSongSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+    @GET("/publisher/followings")
+    Call<MovieSuggestion[]> getFeedMovieSerieSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+    @GET("/publisher/followings")
+    Call<OtherSuggestion[]> getFeedOtherSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
     @GET("/books/v1/volumes")
     Call<Suggestion> getRandomSuggestion();

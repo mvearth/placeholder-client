@@ -44,53 +44,77 @@ public class SuggestionRepository {
         return instance;
     }
 
-    public LiveData<Suggestion[]> getFollowingSuggestions(String nickname) {
-        final MutableLiveData<Suggestion[]> data = new MutableLiveData<>();
+    public LiveData<LinkedList<Suggestion>> getFollowingSuggestions(String email) {
+        final MutableLiveData<LinkedList<Suggestion>> suggestions = new MutableLiveData<>();
+        suggestions.setValue(new LinkedList<>());
 
-        Person person1 = new Person();
-        person1.setNickname("eren and Titan");
-        person1.setName("Titan");
-        person1.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/1.jpg"));
+        final LinkedList<Suggestion> suggestionLinkedList = new LinkedList<>();
 
-        Person person2 = new Person();
-        person2.setNickname("subaru");
-        person2.setName("Subaru loves Emilia");
-        person2.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/2.jpg"));
+        Call<BookSuggestion[]> booksCall = suggestionService.getFeedBookSuggestions(email, SuggestionType.BookSuggestion.toString());
+        booksCall.enqueue(new Callback<BookSuggestion[]>() {
+            @Override
+            public void onResponse(Call<BookSuggestion[]> booksCall, Response<BookSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
 
-        Person person3 = new Person();
-        person3.setNickname("lufi");
-        person3.setName("Lufi");
-        person3.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/3.jpg"));
+            @Override
+            public void onFailure(Call<BookSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
 
-        Person person4 = new Person();
-        person4.setNickname("person");
-        person4.setName("Hi im human");
-        person4.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/4.jpg"));
+        Call<SongSuggestion[]> songsCall = suggestionService.getFeedSongSuggestions(email, SuggestionType.SongSuggestion.toString());
+        songsCall.enqueue(new Callback<SongSuggestion[]>() {
+            @Override
+            public void onResponse(Call<SongSuggestion[]> songsCall, Response<SongSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
 
-        Suggestion suggestion1 = new BookSuggestion();
-        suggestion1.setTitle("Harry Potter");
-        suggestion1.setDescription("Wizards, magic, cool moves. I liked it!");
-        suggestion1.setPerson(person1);
+            @Override
+            public void onFailure(Call<SongSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
 
-        Suggestion suggestion2 = new SongSuggestion();
-        suggestion2.setTitle("Yonkers");
-        suggestion2.setDescription("It's not a light song");
-        suggestion2.setPerson(person2);
+        Call<MovieSuggestion[]> moviesSeriesCall = suggestionService.getFeedMovieSerieSuggestions(email, SuggestionType.MovieSuggestion.toString());
+        moviesSeriesCall.enqueue(new Callback<MovieSuggestion[]>() {
+            @Override
+            public void onResponse(Call<MovieSuggestion[]> moviesSeriesCall, Response<MovieSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
 
-        Suggestion suggestion3 = new MovieSuggestion();
-        suggestion3.setTitle("Tenet");
-        suggestion3.setDescription("Wtf, it doesn't make any sense! What the hell?");
-        suggestion3.setPerson(person3);
+            @Override
+            public void onFailure(Call<MovieSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
 
-        Suggestion suggestion4 = new MovieSuggestion();
-        suggestion4.setTitle("Flaked");
-        suggestion4.setDescription("Hispters TV show");
-        suggestion4.setPerson(person4);
+        Call<OtherSuggestion[]> othersCall = suggestionService.getFeedOtherSuggestions(email, SuggestionType.OtherSuggestion.toString());
+        othersCall.enqueue(new Callback<OtherSuggestion[]>() {
+            @Override
+            public void onResponse(Call<OtherSuggestion[]> othersCall, Response<OtherSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
 
-        final Suggestion[] suggestions = new Suggestion[]{suggestion1, suggestion2, suggestion3, suggestion4};
-        data.setValue(suggestions);
+            @Override
+            public void onFailure(Call<OtherSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
 
-        return data;
+        return suggestions;
     }
 
     public LiveData<LinkedList<Suggestion>> getUserSuggestions(String email) {

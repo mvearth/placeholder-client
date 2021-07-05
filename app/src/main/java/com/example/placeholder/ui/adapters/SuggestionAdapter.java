@@ -95,8 +95,8 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
                         suggestion.getTitle());
         viewHolder.getSuggestionDescription().setText(suggestion.getDescription());
 
-        if (suggestion.getImages() != null)
-            viewHolder.getSuggestionFirstImage().setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getImages()[0]));
+        if (suggestion.getBase64Image() != null)
+            viewHolder.getSuggestionFirstImage().setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getBase64Image()));
     }
 
     @Override

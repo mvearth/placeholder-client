@@ -19,8 +19,9 @@ public abstract class Suggestion {
 
     private String description;
 
+    @SerializedName("image")
     @Expose
-    private byte[][] images;
+    private String base64Image;
 
     @SerializedName("created_at")
     @Expose
@@ -51,12 +52,12 @@ public abstract class Suggestion {
         this.description = description;
     }
 
-    public byte[][] getImages() {
-        return images;
+    public String getBase64Image() {
+        return base64Image;
     }
 
-    public void setImages(byte[][] images) {
-        this.images = images;
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 
     public String getTitle() {

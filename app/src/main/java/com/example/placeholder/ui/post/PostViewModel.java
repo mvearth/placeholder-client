@@ -32,7 +32,7 @@ public class PostViewModel extends ViewModel {
         suggestion.setDescription(description);
 
         if (bitmap != null)
-            suggestion.setImages(new byte[][]{BitmapHelper.convertToByteArray(bitmap)});
+            suggestion.setBase64Image(BitmapHelper.convertToBase64(bitmap));
 
         return suggestionRepository.postSuggestion(suggestion);
     }

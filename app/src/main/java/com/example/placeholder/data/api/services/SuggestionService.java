@@ -35,8 +35,6 @@ public interface SuggestionService {
     @GET("/publisher")
     Call<OtherSuggestion[]> getOwnOtherSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
-
-
     @GET("/publisher/followings")
     Call<BookSuggestion[]> getFeedBookSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
@@ -49,15 +47,15 @@ public interface SuggestionService {
     @GET("/publisher/followings")
     Call<OtherSuggestion[]> getFeedOtherSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
-    @GET("/books/v1/volumes")
-    Call<Suggestion> getRandomSuggestion();
+    @GET("/publisher/followings/randomSuggestion")
+    Call<BookSuggestion> getRandomBookSuggestion(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
-    @POST("add/")
-    Call<Suggestion> addSuggestion(@Body Suggestion user);
+    @GET("/publisher/followings/randomSuggestion")
+    Call<SongSuggestion> getRandomSongSuggestion(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
-    @PUT("update/{id}")
-    Call<Suggestion> updateSuggestion(@Path("id") int id, @Body Suggestion user);
+    @GET("/publisher/followings/randomSuggestion")
+    Call<MovieSuggestion> getRandomMovieSerieSuggestion(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
-    @DELETE("delete/{id}")
-    Call<Suggestion> deleteUser(@Path("id") int id);
+    @GET("/publisher/followings/randomSuggestion")
+    Call<OtherSuggestion> getRandomOtherSuggestion(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 }

@@ -21,6 +21,7 @@ import com.example.placeholder.data.model.SuggestionType;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -190,36 +191,89 @@ public class SuggestionRepository {
         return suggestions;
     }
 
-    public void updateRandomSuggestion(SuggestionType suggestionType) {
+    public void updateBookSuggestion(String email) {
+        Call<BookSuggestion> booksCall = suggestionService.getRandomBookSuggestion(email, SuggestionType.BookSuggestion.toString());
+        booksCall.enqueue(new Callback<BookSuggestion>() {
+            @Override
+            public void onResponse(Call<BookSuggestion> booksCall, Response<BookSuggestion> response) {
+                if (response.isSuccessful()) {
+                    randomSuggestion.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookSuggestion> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void updateSongSuggestion(String email) {
+        Call<SongSuggestion> songsCall = suggestionService.getRandomSongSuggestion(email, SuggestionType.SongSuggestion.toString());
+        songsCall.enqueue(new Callback<SongSuggestion>() {
+            @Override
+            public void onResponse(Call<SongSuggestion> songsCall, Response<SongSuggestion> response) {
+                if (response.isSuccessful()) {
+                    randomSuggestion.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SongSuggestion> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void updateMovieSerieSuggestion(String email) {
+        Call<MovieSuggestion> moviesSeriesCall = suggestionService.getRandomMovieSerieSuggestion(email, SuggestionType.MovieSuggestion.toString());
+        moviesSeriesCall.enqueue(new Callback<MovieSuggestion>() {
+            @Override
+            public void onResponse(Call<MovieSuggestion> moviesSeriesCall, Response<MovieSuggestion> response) {
+                if (response.isSuccessful()) {
+                    randomSuggestion.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieSuggestion> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void updateOtherSuggestion(String email) {
+        Call<OtherSuggestion> othersCall = suggestionService.getRandomOtherSuggestion(email, SuggestionType.OtherSuggestion.toString());
+        othersCall.enqueue(new Callback<OtherSuggestion>() {
+            @Override
+            public void onResponse(Call<OtherSuggestion> othersCall, Response<OtherSuggestion> response) {
+                if (response.isSuccessful()) {
+                    randomSuggestion.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OtherSuggestion> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void updateRandomSuggestion(String email, SuggestionType suggestionType) {
         if (suggestionType == SuggestionType.BookSuggestion) {
-            Suggestion suggestion1 = new BookSuggestion();
-            suggestion1.setTitle("Harry Potter");
-            suggestion1.setDescription("Wizards, magic, cool moves. I liked it!");
+            this.updateBookSuggestion(email);
+        } else if (suggestionType == SuggestionType.MovieSuggestion) {
+            this.updateMovieSerieSuggestion(email);
+        } else if (suggestionType == SuggestionType.SongSuggestion) {
+            this.updateSongSuggestion(email);
+        } else if (suggestionType == SuggestionType.OtherSuggestion) {
+            this.updateOtherSuggestion(email);
+        } else {
+            Random random = new Random();
+            int range = 4;
+            int result = random.nextInt(range);
 
-            randomSuggestion.setValue(suggestion1);
-        }
-
-        if (suggestionType == SuggestionType.MovieSuggestion) {
-            Suggestion suggestion3 = new MovieSuggestion();
-            suggestion3.setTitle("Tenet");
-            suggestion3.setDescription("Wtf, it doesn't make any sense! What the hell?");
-
-            randomSuggestion.setValue(suggestion3);
-        }
-
-        if (suggestionType == SuggestionType.SongSuggestion) {
-            SongSuggestion bookSuggestion = new SongSuggestion();
-            bookSuggestion.setTitle("o som lá");
-
-            randomSuggestion.setValue(bookSuggestion);
-        }
-
-        if (suggestionType == SuggestionType.OtherSuggestion
-                || suggestionType == SuggestionType.RandomSuggestion) {
-            OtherSuggestion bookSuggestion = new OtherSuggestion();
-            bookSuggestion.setTitle("o aaaaaa lá");
-
-            randomSuggestion.setValue(bookSuggestion);
+            this.updateRandomSuggestion(email, SuggestionType.values()[result]);
         }
     }
 

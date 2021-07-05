@@ -12,6 +12,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -21,6 +22,9 @@ public interface PersonService {
 
     @POST("/person")
     Call<Person> signUp(@Body Person person);
+
+    @PUT("/person/{id}")
+    Call<Person> updatePerson(@Path("id")int id, @Body Person person);
 
     @GET("/person/search/{value}")
     Call<Person[]> searchPeople(@Path("value") String value);

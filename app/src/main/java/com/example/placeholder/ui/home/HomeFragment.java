@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
                 if (suggestions != null) {
 
                     for (Suggestion sugg : suggestions)
-                        sugg.setPerson(mViewModel.getLoggedPerson().getValue());
+                        sugg.setPerson(mViewModel.getLoggedPerson().getValue().getFollowingPerson(sugg.getPersonEmail()));
 
                     Collections.sort(suggestions, new Comparator<Suggestion>() {
                         @Override

@@ -1,5 +1,7 @@
 package com.example.placeholder.ui.profile;
 
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -30,5 +32,9 @@ public class ProfileViewModel extends ViewModel {
 
     public LiveData<Person> getLoggedPerson() {
         return personRepository.getLoggedPerson();
+    }
+
+    public void updatePersonIcon(Bitmap image) {
+        personRepository.updatePersonIcon(image);
     }
 }

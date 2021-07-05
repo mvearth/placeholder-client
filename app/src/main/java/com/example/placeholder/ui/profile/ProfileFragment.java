@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,9 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.DrawableContainer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -75,8 +78,17 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
         getGalleryImage = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
-            if (uri != null)
+            if (uri != null) {
                 personIcon.setImageURI(uri);
+
+                Drawable drawable = personIcon.getDrawable();
+                Bitmap image = null;
+
+                if (drawable != null) {
+                    image = ((BitmapDrawable) drawable).getBitmap();
+                    mViewModel.updatePersonIcon(image);
+                }
+            }
         });
 
         requestPermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -123,7 +135,7 @@ public class ProfileFragment extends Fragment {
             public void onChanged(@Nullable LinkedList<Suggestion> suggestions) {
                 if (suggestions != null) {
 
-                    for (Suggestion sugg: suggestions)
+                    for (Suggestion sugg : suggestions)
                         sugg.setPerson(mViewModel.getLoggedPerson().getValue());
 
                     Collections.sort(suggestions, new Comparator<Suggestion>() {

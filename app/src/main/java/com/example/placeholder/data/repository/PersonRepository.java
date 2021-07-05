@@ -1,5 +1,6 @@
 package com.example.placeholder.data.repository;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -245,6 +246,26 @@ public class PersonRepository {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void updatePersonIcon(Bitmap image) {
+        Person person = loggedPerson.getValue();
+        person.setIcon(image);
+
+        Call<Person> call = personService.updatePerson(person.getId(), person);
+        call.enqueue(new Callback<Person>() {
+            @Override
+            public void onResponse(Call<Person> call, Response<Person> response) {
+                if (response.isSuccessful()) {
+                    loggedPerson.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Person> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });

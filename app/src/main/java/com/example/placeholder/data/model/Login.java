@@ -1,7 +1,11 @@
 package com.example.placeholder.data.model;
 
+import com.google.gson.annotations.Expose;
+
 public class Login {
+    @Expose
     private String email;
+    @Expose
     private String password;
 
     public Login(String email, String password){

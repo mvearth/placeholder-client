@@ -15,8 +15,10 @@ import java.util.List;
 public abstract class Suggestion {
     private int id;
 
+    @Expose
     private String title;
 
+    @Expose
     private String description;
 
     @SerializedName("image")
@@ -27,9 +29,9 @@ public abstract class Suggestion {
     @Expose
     private String suggestionDate;
 
-    @Expose(serialize = false, deserialize = false)
     private Person person;
 
+    @Expose
     private String email;
 
     @SerializedName("suggestion_type")

@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.example.placeholder.data.model.Helpers.BitmapHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,6 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Person implements Serializable {
+
+    @Expose
+    private int id;
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -32,9 +37,10 @@ public class Person implements Serializable {
 
     @SerializedName("photo")
     @Expose
-    private Bitmap icon;
+    private String base64Icon;
 
     private LinkedList<Person> followers;
+
     private LinkedList<Person> followings;
 
     public Person() {
@@ -45,6 +51,14 @@ public class Person implements Serializable {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -80,11 +94,11 @@ public class Person implements Serializable {
     }
 
     public Bitmap getIcon() {
-        return icon;
+        return BitmapHelper.convertToBitmap(base64Icon);
     }
 
     public void setIcon(Bitmap icon) {
-        this.icon = icon;
+        this.base64Icon = BitmapHelper.convertToBase64(icon);
     }
 
     public LinkedList<Person> getFollowers() {
@@ -127,6 +141,15 @@ public class Person implements Serializable {
 
     public void unfollowPerson(Person person) {
         this.followings.remove(person);
+    }
+
+    public Person getFollowingPerson(String email) {
+        for (Person person : this.followings) {
+            if (person.email.equals(email))
+                return person;
+        }
+
+        return null;
     }
 
     @Override

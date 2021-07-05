@@ -120,20 +120,6 @@ public class PersonRepository {
         return this.loggedPersonFollowings;
     }
 
-    /*    public LiveData<Person> getPerson(String nickname){
-     *//*MutableLiveData<Person> liveperson = new MutableLiveData<>();
-        Person person2 = new Person();
-        person2.setNickname("subaru");
-        person2.setName("Subaru loves Emilia");
-        person2.setFollowing(3);
-        person2.setFollowers(894654);
-        person2.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/2.jpg"));
-
-        liveperson.setValue(person2);
-
-        return liveperson;*//*
-    }*/
-
     public LiveData<Integer> signUp(String name, String nickname, String email, String password) {
         Person person = new Person();
         person.setName(name);
@@ -143,15 +129,15 @@ public class PersonRepository {
 
         final MutableLiveData<Integer> result = new MutableLiveData<Integer>();
 
-        Call<Person> call = personService.signUp(person);
-        call.enqueue(new Callback<Person>() {
+        Call<Object> call = personService.signUp(person);
+        call.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<Person> call, Response<Person> response) {
+            public void onResponse(Call<Object> call, Response<Object> response) {
                 result.setValue(response.code());
             }
 
             @Override
-            public void onFailure(Call<Person> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });

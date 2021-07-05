@@ -1,5 +1,6 @@
 package com.example.placeholder.ui.adapters;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,12 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
         viewHolder.setSelectedPerson(currentPerson);
 
-        viewHolder.getPersonIcon().setImageBitmap(currentPerson.getIcon());
+        Bitmap personImageBitmap = currentPerson.getIcon();
+        if (personImageBitmap == null)
+            viewHolder.getPersonIcon().setImageResource(R.drawable.ic_person_24dp);
+        else
+            viewHolder.getPersonIcon().setImageBitmap(personImageBitmap);
+
         viewHolder.getPersonNickname().setText(currentPerson.getNickname());
         viewHolder.getPersonName().setText(currentPerson.getName());
 

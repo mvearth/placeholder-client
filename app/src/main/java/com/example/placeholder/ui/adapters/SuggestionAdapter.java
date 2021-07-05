@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.placeholder.R;
 import com.example.placeholder.data.model.Helpers.BitmapHelper;
+import com.example.placeholder.data.model.Person;
 import com.example.placeholder.data.model.Suggestion;
 
 import org.jetbrains.annotations.NotNull;
@@ -80,23 +81,28 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Suggestion suggestion = localDataSet.get(position);
+        Person person = suggestion.getPerson();
 
-        Bitmap personImageBitmap = suggestion.getPerson().getIcon();
+        if (person != null) {
+            Bitmap personImageBitmap = person.getIcon();
 
-        if (personImageBitmap == null)
-            viewHolder.getPersonIcon().setImageResource(R.drawable.ic_person_24dp);
-        else
-            viewHolder.getPersonIcon().setImageBitmap(personImageBitmap);
+            if (personImageBitmap == null)
+                viewHolder.getPersonIcon().setImageResource(R.drawable.ic_person_24dp);
+            else
+                viewHolder.getPersonIcon().setImageBitmap(personImageBitmap);
 
-        viewHolder.getPersonNickname().setText(suggestion.getPerson().getNickname());
-        viewHolder.getSuggestionTitle().setText(
-                suggestion.getSuggestionType().toString() +
-                        " - " +
-                        suggestion.getTitle());
-        viewHolder.getSuggestionDescription().setText(suggestion.getDescription());
+            viewHolder.getPersonNickname().setText(suggestion.getPerson().getNickname());
+            viewHolder.getSuggestionTitle().setText(
+                    suggestion.getSuggestionType().toString() +
+                            " - " +
+                            suggestion.getTitle());
+            viewHolder.getSuggestionDescription().setText(suggestion.getDescription());
 
-        if (suggestion.getBase64Image() != null)
-            viewHolder.getSuggestionFirstImage().setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getBase64Image()));
+            if (suggestion.getBase64Image() != null){
+                viewHolder.getSuggestionFirstImage().setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getBase64Image()));
+                viewHolder.getSuggestionFirstImage().setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override

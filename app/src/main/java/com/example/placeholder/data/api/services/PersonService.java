@@ -21,7 +21,7 @@ public interface PersonService {
     Call<Person> login(@Body Login login);
 
     @POST("/person")
-    Call<Person> signUp(@Body Person person);
+    Call<Object> signUp(@Body Person person);
 
     @PUT("/person/{id}")
     Call<Person> updatePerson(@Path("id")int id, @Body Person person);

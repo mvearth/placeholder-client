@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PlaceHolder</string>
+    <string name="app_name">App PlaceHolder</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

@@ -89,8 +89,10 @@ public class SuggestionFragment extends Fragment {
                     suggestionType.setText(suggestion.getSuggestionType().toString());
                     suggestionTitle.setText(suggestion.getTitle());
 
-                    if (suggestion.getBase64Image() != null)
+                    if (suggestion.getBase64Image() != null){
                         suggestionImage.setImageBitmap(BitmapHelper.convertToBitmap(suggestion.getBase64Image()));
+                        suggestionImage.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });

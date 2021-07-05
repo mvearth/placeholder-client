@@ -144,9 +144,11 @@ public class Person implements Serializable {
     }
 
     public Person getFollowingPerson(String email) {
-        for (Person person : this.followings) {
-            if (person.email.equals(email))
-                return person;
+        if (this.followings != null) {
+            for (Person person : this.followings) {
+                if (person.email.equals(email))
+                    return person;
+            }
         }
 
         return null;

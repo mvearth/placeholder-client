@@ -59,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                             switch (signupResult) {
                                 case 200: {
                                     showMessage(R.string.signup_successful);
+                                    finish();
                                     break;
                                 }
                                 case 409: {

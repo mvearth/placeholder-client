@@ -70,6 +70,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/default_suggestion_description_border"
             android:padding="5dp"
+            android:visibility="gone"
             android:layout_marginBottom="5dp"
             android:scaleType="fitXY" />
 

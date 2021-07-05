@@ -7,6 +7,8 @@ import com.example.placeholder.ui.suggestion.SuggestionFragment;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -20,13 +22,17 @@ public abstract class Suggestion {
     @Expose
     private byte[][] images;
 
-    private Date suggestionDate;
+    @SerializedName("created_at")
+    @Expose
+    private String suggestionDate;
 
     @Expose(serialize = false, deserialize = false)
     private Person person;
 
     private String email;
 
+    @SerializedName("suggestion_type")
+    @Expose
     protected SuggestionType suggestionType;
 
     public Person getPerson() {
@@ -53,14 +59,6 @@ public abstract class Suggestion {
         this.images = images;
     }
 
-    public Date getPublishDate() {
-        return suggestionDate;
-    }
-
-    public void setPublishDate(Date suggestionDate) {
-        this.suggestionDate = suggestionDate;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -77,11 +75,11 @@ public abstract class Suggestion {
         this.email = email;
     }
 
-    public Date getSuggestionDate() {
+    public String getSuggestionDate() {
         return suggestionDate;
     }
 
-    public void setSuggestionDate(Date suggestionDate) {
+    public void setSuggestionDate(String suggestionDate) {
         this.suggestionDate = suggestionDate;
     }
 

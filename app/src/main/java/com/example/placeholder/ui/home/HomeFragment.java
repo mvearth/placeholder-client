@@ -1,5 +1,6 @@
 package com.example.placeholder.ui.home;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -18,6 +19,10 @@ import android.view.ViewGroup;
 import com.example.placeholder.R;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.ui.adapters.SuggestionAdapter;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -46,17 +51,23 @@ public class HomeFragment extends Fragment {
         suggestionsRecyclerView.setHasFixedSize(true);
         suggestionsRecyclerView.setAdapter(suggestionAdapter);
 
-        observeViewModel(mViewModel);
+        //observeViewModel(mViewModel);
     }
 
-    private void observeViewModel(HomeViewModel viewModel) {
-        viewModel.getSuggestions("").observe(getViewLifecycleOwner(), new Observer<Suggestion[]>() {
-            @Override
-            public void onChanged(@Nullable Suggestion[] suggestions) {
-                if (suggestions != null) {
-                    suggestionAdapter.setLocalDataSet(suggestions);
-                }
-            }
-        });
-    }
+//    private void observeViewModel(HomeViewModel viewModel) {
+//        viewModel.getSuggestions("").observe(getViewLifecycleOwner(), new Observer<LinkedList<LiveData<Suggestion[]>>>() {
+//            @Override
+//            public void onChanged(@Nullable LinkedList<LiveData<Suggestion[]>> suggestions) {
+//                if (suggestions != null) {
+//                    LinkedList<Suggestion> suggestionsList = new LinkedList<>();
+//
+//                    for (LiveData<Suggestion[]> suggs: suggestions){
+//                        suggestionsList.addAll(Arrays.asList(Objects.requireNonNull(suggs.getValue())));
+//                    }
+//
+//                    suggestionAdapter.setLocalDataSet(suggestionsList);
+//                }
+//            }
+//        });
+   // }
 }

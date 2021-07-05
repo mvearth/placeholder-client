@@ -1,6 +1,7 @@
 package com.example.placeholder.ui.adapters;
 
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,11 @@ import com.example.placeholder.data.model.Suggestion;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.LinkedList;
+
 public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.ViewHolder> {
 
-    private Suggestion[] localDataSet;
+    private LinkedList<Suggestion> localDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView personIcon;
@@ -60,7 +63,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
         }
     }
 
-    public void setLocalDataSet(Suggestion[] dataSet) {
+    public void setLocalDataSet(LinkedList<Suggestion> dataSet) {
         localDataSet = dataSet;
         notifyDataSetChanged();
     }
@@ -76,9 +79,15 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Suggestion suggestion = localDataSet[position];
+        Suggestion suggestion = localDataSet.get(position);
 
-        viewHolder.getPersonIcon().setImageBitmap(suggestion.getPerson().getIcon());
+        Bitmap personImageBitmap = suggestion.getPerson().getIcon();
+
+        if (personImageBitmap == null)
+            viewHolder.getPersonIcon().setImageResource(R.drawable.ic_person_24dp);
+        else
+            viewHolder.getPersonIcon().setImageBitmap(personImageBitmap);
+
         viewHolder.getPersonNickname().setText(suggestion.getPerson().getNickname());
         viewHolder.getSuggestionTitle().setText(
                 suggestion.getSuggestionType().toString() +
@@ -92,6 +101,9 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        if (localDataSet == null)
+            return 0;
+
+        return localDataSet.size();
     }
 }

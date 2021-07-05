@@ -1,7 +1,12 @@
 package com.example.placeholder.data.api.services;
 
+import com.example.placeholder.data.model.BookSuggestion;
+import com.example.placeholder.data.model.MovieSuggestion;
+import com.example.placeholder.data.model.OtherSuggestion;
 import com.example.placeholder.data.model.Person;
+import com.example.placeholder.data.model.SongSuggestion;
 import com.example.placeholder.data.model.Suggestion;
+import com.example.placeholder.data.model.SuggestionType;
 
 import java.util.List;
 
@@ -21,8 +26,17 @@ public interface SuggestionService {
     @POST("/publisher")
     Call<Suggestion[]> getFeedSuggestions(@Body Suggestion suggestion);
 
-    @GET("/books/v1/volumes")
-    Call<List<Suggestion>> getOwnSuggestions(@Path("id") int id);
+    @GET("/publisher")
+    Call<BookSuggestion[]> getOwnBookSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+    @GET("/publisher")
+    Call<SongSuggestion[]> getOwnSongSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+    @GET("/publisher")
+    Call<MovieSuggestion[]> getOwnMovieSerieSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
+
+    @GET("/publisher")
+    Call<OtherSuggestion[]> getOwnOtherSuggestions(@Query("email") String email, @Query("suggestion_type") String suggestionType);
 
     @GET("/books/v1/volumes")
     Call<Suggestion> getRandomSuggestion();

@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -43,6 +44,12 @@ import com.example.placeholder.ui.adapters.SuggestionAdapter;
 import com.example.placeholder.ui.home.HomeViewModel;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
@@ -111,10 +118,21 @@ public class ProfileFragment extends Fragment {
     }
 
     private void observeViewModel(ProfileViewModel viewModel) {
-        viewModel.getSuggestions("").observe(getViewLifecycleOwner(), new Observer<Suggestion[]>() {
+        viewModel.getSuggestions(mViewModel.getLoggedPerson().getValue().getEmail()).observe(getViewLifecycleOwner(), new Observer<LinkedList<Suggestion>>() {
             @Override
-            public void onChanged(@Nullable Suggestion[] suggestions) {
+            public void onChanged(@Nullable LinkedList<Suggestion> suggestions) {
                 if (suggestions != null) {
+
+                    for (Suggestion sugg: suggestions)
+                        sugg.setPerson(mViewModel.getLoggedPerson().getValue());
+
+                    Collections.sort(suggestions, new Comparator<Suggestion>() {
+                        @Override
+                        public int compare(Suggestion o1, Suggestion o2) {
+                            return o1.getSuggestionDate().compareTo(o2.getSuggestionDate()) * -1;
+                        }
+                    });
+
                     suggestionAdapter.setLocalDataSet(suggestions);
                 }
             }

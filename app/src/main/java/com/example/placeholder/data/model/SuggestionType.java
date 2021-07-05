@@ -1,9 +1,29 @@
 package com.example.placeholder.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum SuggestionType {
-    OtherSuggestion,
+    @SerializedName("BOOK")
     BookSuggestion,
-    MovieSuggestion,
+    @SerializedName("SONG")
     SongSuggestion,
-    RandomSuggestion
+    @SerializedName("MOVIE_SERIE")
+    MovieSuggestion,
+    @SerializedName("OTHER")
+    OtherSuggestion,
+    RandomSuggestion;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case BookSuggestion:
+                return "BOOK";
+            case SongSuggestion:
+                return "SONG";
+            case MovieSuggestion:
+                return "MOVIE_SERIE";
+            default:
+                return "OTHER";
+        }
+    }
 }

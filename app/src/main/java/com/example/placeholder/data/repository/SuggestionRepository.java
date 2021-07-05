@@ -19,6 +19,9 @@ import com.example.placeholder.data.model.SongSuggestion;
 import com.example.placeholder.data.model.Suggestion;
 import com.example.placeholder.data.model.SuggestionType;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,23 +93,77 @@ public class SuggestionRepository {
         return data;
     }
 
-    public LiveData<Suggestion[]> getUserSuggestions(String nickname) {
-        final MutableLiveData<Suggestion[]> data = new MutableLiveData<>();
+    public LiveData<LinkedList<Suggestion>> getUserSuggestions(String email) {
+        final MutableLiveData<LinkedList<Suggestion>> suggestions = new MutableLiveData<>();
+        suggestions.setValue(new LinkedList<>());
 
-        Person person2 = new Person();
-        person2.setNickname("subaru");
-        person2.setName("Subaru loves Emilia");
-        person2.setIcon(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download" + "/2.jpg"));
+        final LinkedList<Suggestion> suggestionLinkedList = new LinkedList<>();
 
-        Suggestion suggestion2 = new SongSuggestion();
-        suggestion2.setTitle("Yonkers");
-        suggestion2.setDescription("It's not a light song");
-        suggestion2.setPerson(person2);
+        Call<BookSuggestion[]> booksCall = suggestionService.getOwnBookSuggestions(email, SuggestionType.BookSuggestion.toString());
+        booksCall.enqueue(new Callback<BookSuggestion[]>() {
+            @Override
+            public void onResponse(Call<BookSuggestion[]> booksCall, Response<BookSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
 
-        final Suggestion[] suggestions = new Suggestion[]{suggestion2};
-        data.setValue(suggestions);
+            @Override
+            public void onFailure(Call<BookSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
 
-        return data;
+        Call<SongSuggestion[]> songsCall = suggestionService.getOwnSongSuggestions(email, SuggestionType.SongSuggestion.toString());
+        songsCall.enqueue(new Callback<SongSuggestion[]>() {
+            @Override
+            public void onResponse(Call<SongSuggestion[]> songsCall, Response<SongSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SongSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+        Call<MovieSuggestion[]> moviesSeriesCall = suggestionService.getOwnMovieSerieSuggestions(email, SuggestionType.MovieSuggestion.toString());
+        moviesSeriesCall.enqueue(new Callback<MovieSuggestion[]>() {
+            @Override
+            public void onResponse(Call<MovieSuggestion[]> moviesSeriesCall, Response<MovieSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+        Call<OtherSuggestion[]> othersCall = suggestionService.getOwnOtherSuggestions(email, SuggestionType.OtherSuggestion.toString());
+        othersCall.enqueue(new Callback<OtherSuggestion[]>() {
+            @Override
+            public void onResponse(Call<OtherSuggestion[]> othersCall, Response<OtherSuggestion[]> response) {
+                if (response.isSuccessful()) {
+                    suggestionLinkedList.addAll(Arrays.asList(response.body()));
+                    suggestions.setValue(suggestionLinkedList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OtherSuggestion[]> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+        return suggestions;
     }
 
     public void updateRandomSuggestion(SuggestionType suggestionType) {
